@@ -11,7 +11,7 @@ public class WeaponPickup : MonoBehaviour
     {
         AttackComp _attackComp =collision.gameObject.GetComponent<AttackComp>();
         if (_attackComp != null) {
-            if (_attackComp._currentWeapon.durability<=0) {
+            if (_attackComp.HasWeapon) {
                 _attackComp.SetWeapon(TypeWeapon);
                 gameObject.SetActive(false);
             }
