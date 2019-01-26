@@ -16,7 +16,7 @@ public class Stamina : Entity, IHurtable
             entity.Die();
     }
 
-    int IHurtable.Hurt(int damage)
+     public int Hurt(int damage)
     {
         stamina += damage;
 

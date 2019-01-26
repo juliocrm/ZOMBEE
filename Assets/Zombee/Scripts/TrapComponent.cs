@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class TrapComponent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public TrapDef trapDefinition;
+    public GameObject TrapPrefab;
+
+    public void InstantiateTrap(Vector3 Position) {
+        //Create a prefab copy in the point 
+        //Instantiate in position
+        Instantiate(TrapPrefab, Position, new Quaternion()); 
+        TimeToExecuteTrap(trapDefinition.TimeToActive);
+    }
+    private IEnumerator TimeToExecuteTrap(float Time) {
+        yield return new WaitForSeconds(Time);
+        ExecuteTrap();
+    }
+    private void ExecuteTrap() {
+        //EjecuteTrap
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
