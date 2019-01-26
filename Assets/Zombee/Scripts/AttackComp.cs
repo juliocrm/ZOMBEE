@@ -8,6 +8,11 @@ public class AttackComp : Entity
 
     private bool attacking = false;
 
+    [SerializeField]
+    private Transform _overlapSphereTransform;
+    [SerializeField]
+    private float _sphereRadious;
+
     public bool HasWeapon
     {
         get
@@ -43,6 +48,8 @@ public class AttackComp : Entity
     {
         if(attacking == true)
         {
+            Physics.OverlapSphere(_overlapSphereTransform.position,
+                _sphereRadious);
             Collider[] _collider = Physics.OverlapSphere(transform.position, 2f);
             foreach (var contact in _collider)
             {
