@@ -9,9 +9,11 @@ public class AttackComp : Entity
     private bool attacking = false;
 
     [SerializeField]
-    private Transform _overlapSphereTransform;
+    public Transform _overlapSphereTransform;
     [SerializeField]
-    private float _sphereRadious;
+    public float _sphereRadious;
+
+    public Vector3 OverlapSpherePosition { get { return _overlapSphereTransform.position; } }
 
     public bool HasWeapon
     {
