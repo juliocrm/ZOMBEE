@@ -36,7 +36,7 @@ public class AttackComp : Entity
     public void SetWeapon(int weaponID)
     {
         //Get weapon from GameManager
-        //_currentWeapon = GameManager.Instance.weaponDefs[weaponID];
+        _currentWeapon = GameManager.Get.weaponDefs[weaponID];
     }
 
     private void Update()
