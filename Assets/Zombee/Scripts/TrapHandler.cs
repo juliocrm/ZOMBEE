@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TrapHandler : Entity
 {
+
+    public TrapComponent[] traps;
+
     public override void Die()
     {
         throw new System.NotImplementedException();
@@ -12,5 +15,10 @@ public class TrapHandler : Entity
     public void CraftTrap(int i)
     {
 
+    }
+    public void PutTrap(int Trap, Vector3 PlayerPosition)
+    {
+        Debug.Log("puttrap" + Trap);
+        traps[Trap].InstantiateTrap(PlayerPosition);
     }
 }
