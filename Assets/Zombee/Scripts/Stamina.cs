@@ -11,11 +11,18 @@ public class Stamina : Entity, IHurtable
 
     public override void Die()
     {
-        throw new System.NotImplementedException();
+        var entities = GetComponents<Entity>();
+        foreach (var entity in entities)
+            entity.Die();
     }
 
     int IHurtable.Hurt(int damage)
     {
-        throw new System.NotImplementedException();
+        stamina += damage;
+
+        if (stamina <= 0)
+            Die();
+
+        return stamina;
     }
 }
