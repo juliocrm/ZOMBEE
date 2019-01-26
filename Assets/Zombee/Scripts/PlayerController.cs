@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Entity
 {
     Rigidbody playerRigidbody;
     Transform playerTransform;
@@ -61,5 +61,10 @@ public class PlayerController : MonoBehaviour
         Vector3 currentAngle = playerTransform.eulerAngles;
         currentAngle.y = Mathf.LerpAngle(playerTransform.eulerAngles.y, heading, Time.deltaTime*rotationSpeed);
         playerRigidbody.MoveRotation(Quaternion.Euler(currentAngle));
+    }
+
+    public override void Die()
+    {
+        throw new System.NotImplementedException();
     }
 }
