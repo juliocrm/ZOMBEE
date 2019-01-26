@@ -13,7 +13,7 @@ public class PlayerController : Entity
     [SerializeField]
     Movement playerMovement;
     [SerializeField]
-    Attack playerAttack;
+    AttackComp playerAttack;
     [SerializeField]
     TrapHandler trapHandler;
 
