@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public int TypeWeapon;
+
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        AttackComp _attackComp =collision.gameObject.GetComponent<AttackComp>();
+        if (_attackComp != null) {
+            if (_attackComp._currentWeapon.durability<=0) {
+                _attackComp.SetWeapon(TypeWeapon);
+                gameObject.SetActive(false);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

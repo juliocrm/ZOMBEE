@@ -26,6 +26,11 @@ public struct TrapDef
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Get { get; private set; }
+    private void Awake()
+    {
+        Get = this;
+    }
     public WeaponDef[] weaponDefs;
 }
 
