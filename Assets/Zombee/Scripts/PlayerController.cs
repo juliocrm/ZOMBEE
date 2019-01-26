@@ -34,7 +34,19 @@ public class PlayerController : Entity
 
         if (Input.GetKeyDown(KeyCode.JoystickButton0))
         {
-            //trapHandler.PutTrap();
+            //trapHandler.PutTrap(0);
+        }
+        if (Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            //trapHandler.PutTrap(1);
+        }
+        if (Input.GetKeyDown(KeyCode.JoystickButton2))
+        {
+            //trapHandler.PutTrap(2);
+        }
+        if (Input.GetKeyDown(KeyCode.JoystickButton3))
+        {
+            //trapHandler.PutTrap(3);
         }
     }
 
