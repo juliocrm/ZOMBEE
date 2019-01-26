@@ -17,11 +17,12 @@ public enum TrapType
     Turn
 }
 
+[System.Serializable]
 public struct TrapDef
 {
     public TrapType TrapType;
     public int TimeToActive;
-
+    public int TimeActive;
 }
 
 public class GameManager : MonoBehaviour
