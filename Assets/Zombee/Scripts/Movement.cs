@@ -68,4 +68,8 @@ public class Movement : Entity
     {
         throw new System.NotImplementedException();
     }
+
+    public Vector3 GetPlayerPosition() {
+        return playerTransform.position;
+    }
 }
