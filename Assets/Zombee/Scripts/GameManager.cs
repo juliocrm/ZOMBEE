@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [System.Serializable]
 public struct WeaponDef
@@ -27,11 +28,21 @@ public struct TrapDef
 
 public class GameManager : MonoBehaviour
 {
+    private MusicManager _musicManager;
     public static GameManager Get { get; private set; }
-    private void Awake()
+
+    void Awake()
     {
         Get = this;
+        _musicManager = GetComponentInChildren<MusicManager>();
+        Assert.IsNotNull(_musicManager, "Falta el MusicManager");
     }
+    void Start()
+    {
+        _musicManager.Init();
+
+    }
+
     public WeaponDef[] weaponDefs;
 }
 

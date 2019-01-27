@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Stamina : Entity, IHurtable
 {
@@ -8,6 +9,13 @@ public class Stamina : Entity, IHurtable
 
     int stamina =  maxStamina;
     public int StaminaAmount { get; set; }
+
+    UnityEvent Injured;
+
+    private void Awake()
+    {
+        Injured = new UnityEvent();
+    }
 
     public override void Die()
     {
@@ -22,6 +30,8 @@ public class Stamina : Entity, IHurtable
 
         if (stamina <= 0)
             Die();
+
+        Injured.Invoke();
 
         return stamina;
     }
