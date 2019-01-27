@@ -8,7 +8,7 @@ public class MusicManager : MonoBehaviour
     private float _volumeChangeOverTime = .25f;
 
     [SerializeField]
-    private float _waitToGoBackToBaseMusic = 3f;
+    private float _waitToGoBackToBaseMusic = 4f;
 
     [SerializeField]
     private AudioClip _baseClip;
@@ -17,8 +17,6 @@ public class MusicManager : MonoBehaviour
     [SerializeField]
     private AudioClip _combatClip;
 
-    private Coroutine _backToBaseTimerHandle;
-
     private AudioSource _audioBase;
     private AudioSource _audioChase;
     private AudioSource _audioCombat;
@@ -26,6 +24,8 @@ public class MusicManager : MonoBehaviour
     private bool _raiseBase;
     private bool _raiseChase;
     private bool _raiseCombat;
+
+    private float _timeToGoBackToBase = -1;
 
     private void Awake()
     {
@@ -72,8 +72,7 @@ public class MusicManager : MonoBehaviour
         _raiseChase = true;
         _raiseCombat = false;
 
-        if(_backToBaseTimerHandle != null) StopCoroutine(_backToBaseTimerHandle);
-        _backToBaseTimerHandle = StartCoroutine(StartBackToBaseTimer());
+        _timeToGoBackToBase = Time.timeSinceLevelLoad + _waitToGoBackToBaseMusic;
     }
 
     public void PlayCombat()
@@ -82,15 +81,7 @@ public class MusicManager : MonoBehaviour
         _raiseChase = false;
         _raiseCombat = true;
 
-        if (_backToBaseTimerHandle != null) StopCoroutine(_backToBaseTimerHandle);
-        _backToBaseTimerHandle = StartCoroutine(StartBackToBaseTimer());
-    }
-
-    private IEnumerator StartBackToBaseTimer()
-    {
-        yield return new WaitForSeconds(_waitToGoBackToBaseMusic);
-        _backToBaseTimerHandle = null;
-        PlayBase();
+        _timeToGoBackToBase = Time.timeSinceLevelLoad + _waitToGoBackToBaseMusic;
     }
 
     private void OnEntitySpawn(GameObject entity)
@@ -107,7 +98,11 @@ public class MusicManager : MonoBehaviour
             stamina.Injured.AddListener(PlayCombat);
         }
 
-        // TODO: Asignar listener a enemey AI al detectar player
+        EnemyAI enemyAI = entity.GetComponent<EnemyAI>();
+        if (enemyAI)
+        {
+            enemyAI.ChasingEnemy.AddListener(PlayChase);
+        }
     }
 
     private void Update()
@@ -115,6 +110,15 @@ public class MusicManager : MonoBehaviour
         _audioBase.volume += CalculateVolumeDelta(_raiseBase, _audioBase.volume);
         _audioChase.volume += CalculateVolumeDelta(_raiseChase, _audioChase.volume);
         _audioCombat.volume += CalculateVolumeDelta(_raiseCombat, _audioCombat.volume);
+
+        if (_timeToGoBackToBase > 0)
+        {
+            if (Time.timeSinceLevelLoad >= _timeToGoBackToBase)
+            {
+                _timeToGoBackToBase = -1;
+                PlayBase();
+            }
+        }
     }
 
     private float CalculateVolumeDelta(bool onRising, float volume)

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyAI : Entity
 {
@@ -21,6 +22,8 @@ public class EnemyAI : Entity
     public Transform[] PatrolPoints { get; set; }
     public Transform TargetTransform { get; set; }
 
+    public UnityEvent ChasingEnemy;
+
     Transform enemyTransform;
     NavMeshAgent enemyAgent;
     EnemyType enemyType;
@@ -33,6 +36,7 @@ public class EnemyAI : Entity
     {
         enemyTransform = transform;
         enemyAgent = GetComponent<NavMeshAgent>();
+        ChasingEnemy = new UnityEvent();
     }
 
     public void Init(Transform t, Transform[] pp)
@@ -87,6 +91,14 @@ public class EnemyAI : Entity
                 }
             }
             yield return waitUntilNextDecition;
+        }
+    }
+
+    private void Update()
+    {
+        if (playerOnSight)
+        {
+            ChasingEnemy.Invoke();
         }
     }
     
