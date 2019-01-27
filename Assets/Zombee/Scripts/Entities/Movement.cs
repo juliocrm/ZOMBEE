@@ -10,12 +10,27 @@ public class Movement : Entity
     public float movementSpeed = 3f;
     public float tiredSpeed = 2f;
     public float rotationSpeed = 2f;
+    
 
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerTransform = transform;
         playerStamina = GetComponent<Stamina>();
+    }
+
+    private void Start()
+    {
+    }
+
+    private void FixedUpdate()
+    {
+        Quaternion currentRotation = playerRigidbody.rotation;
+
+        currentRotation.x = Mathf.Lerp(currentRotation.x, 0f, .1f);
+        currentRotation.z = Mathf.Lerp(currentRotation.z, 0f, .1f);
+        
+        playerRigidbody.rotation = currentRotation;
     }
 
     public void Move(float forward)
@@ -37,7 +52,9 @@ public class Movement : Entity
 
     public void Rotate(Vector3 direction)
     {
-        playerRigidbody.rotation = Quaternion.Euler(playerRigidbody.rotation.eulerAngles + direction * rotationSpeed * Time.deltaTime);
+        Quaternion currentRotation = playerRigidbody.rotation;
+        currentRotation.y = Quaternion.Euler(playerRigidbody.rotation.eulerAngles + direction * rotationSpeed * Time.deltaTime).y;
+        playerRigidbody.rotation = currentRotation;
     }
 
     public void LookToStick(float xAxis, float yAxis)
