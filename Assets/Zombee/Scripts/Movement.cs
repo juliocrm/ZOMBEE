@@ -38,8 +38,8 @@ public class Movement : Entity
     {
         if (direction == Vector3.zero)
             return;
-        print(playerStamina.StaminaAmount);
-        movementSpeed = (playerStamina.StaminaAmount > 5) ? 3 : 1;
+        //print(playerStamina.StaminaAmount);
+        movementSpeed = (playerStamina.StaminaAmount > 5) ? 3 : 2;
         Vector3 newPos = playerRigidbody.position + direction * movementSpeed * Time.deltaTime;
         //if(playerStamina.StaminaAmount > 5)
         //  playerStamina.Hurt(runStaminaCost);
