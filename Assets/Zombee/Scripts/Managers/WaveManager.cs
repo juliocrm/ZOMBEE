@@ -112,11 +112,11 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    public void SpawnEnemyOnPositon(GameObject prefab, Transform transform, EnemyAI.EnemyType enemyType)
+    public void SpawnEnemyOnPositon(GameObject prefab, Transform transformToSpawn, EnemyAI.EnemyType enemyType)
     {
-        GameObject enemyGameObject = Instantiate(prefab, transform);
+        GameObject enemyGameObject = Instantiate(prefab, transformToSpawn);
 
-        enemyGameObject.transform.parent = transform;
+        enemyGameObject.transform.localPosition = Vector3.zero;
 
         Transform targetPoint = _enemyTargetPoints[Random.Range(0, _enemyTargetPoints.Length)].transform;
 
