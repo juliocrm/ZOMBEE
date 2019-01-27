@@ -8,7 +8,8 @@ public class PickupHealth : MonoBehaviour
     public int Time;
     Stamina staminaComponent;
     bool Incontact = false;
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider collision)
     {
         staminaComponent= collision.gameObject.GetComponent<Stamina>();
         if (staminaComponent != null) {
@@ -23,7 +24,9 @@ public class PickupHealth : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    private void OnCollisionExit(Collision collision)
+    
+
+    private void OnTriggerExit(Collider collision)
     {
         if (staminaComponent == collision.gameObject.GetComponent<Stamina>())
         {

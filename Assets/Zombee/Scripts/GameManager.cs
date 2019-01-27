@@ -22,8 +22,8 @@ public enum TrapType
 public struct TrapDef
 {
     public TrapType TrapType;
-    public int TimeToActive;
-    public int TimeActive;
+    public float TimeToActive;
+    public float TimeActive;
     public int Damage;
 }
 
