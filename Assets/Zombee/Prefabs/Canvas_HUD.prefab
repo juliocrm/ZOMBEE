@@ -619,7 +619,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cee82b482e5f0b847881166fb290798e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -819,7 +819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 79.22, y: -515.1}
+  m_AnchoredPosition: {x: 79.22, y: -536.2499}
   m_SizeDelta: {x: 158.44, y: 119.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3897639347790212749
@@ -914,7 +914,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -24}
+  m_AnchoredPosition: {x: 0, y: -56.5}
   m_SizeDelta: {x: 280, y: 49.23}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3897639347818297070
@@ -1082,11 +1082,11 @@ RectTransform:
   m_Father: {fileID: 3897639348209256829}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 280.3, y: 24}
-  m_Pivot: {x: 0, y: 0.5}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3897639348073128224
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1115,12 +1115,12 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 3
+  m_Sprite: {fileID: 21300000, guid: a840076ab959a0a45a4e875243d0ab95, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.649
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1312,7 +1312,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 79.245, y: -643.1}
+  m_AnchoredPosition: {x: 79.245, y: -664.2499}
   m_SizeDelta: {x: 158.39, y: 119.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3897639348172980537
@@ -1408,7 +1408,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 280, y: 24}
+  m_SizeDelta: {x: 280, y: 61.66}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3897639348209256803
 CanvasRenderer:
@@ -1438,9 +1438,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 66a9f33de85de8049a02ed63fafbee4d, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3239,7 +3239,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 79.22006, y: -262.15}
+  m_AnchoredPosition: {x: 79.22006, y: -283.2999}
   m_SizeDelta: {x: 158.44, y: 118.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3897639349291204409
@@ -3415,7 +3415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -92.85}
+  m_AnchoredPosition: {x: 0, y: -114}
   m_SizeDelta: {x: 158.44, y: 103.32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3897639349519425029
@@ -3513,7 +3513,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 79.22, y: -387.5}
+  m_AnchoredPosition: {x: 79.22, y: -408.6499}
   m_SizeDelta: {x: 158.44, y: 118.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3897639349549527325
