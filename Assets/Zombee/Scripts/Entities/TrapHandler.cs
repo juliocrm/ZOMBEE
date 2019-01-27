@@ -8,6 +8,8 @@ public class TrapHandler : Entity
     public TrapComponent[] traps;
     bool Died = false;
     public Animator _anim;
+    public int StaminaCost;
+
     public override void Die()
     {
         enabled = false;
@@ -15,8 +17,10 @@ public class TrapHandler : Entity
 
     public void PutTrap(int Trap, Vector3 PlayerPosition)
     {
-        if (!Died)
+        
+        if (!Died && GetComponent<Stamina>().StaminaAmount>=StaminaCost)
         {
+            GetComponent<Stamina>().Hurt(StaminaCost, transform.position);
             _anim.SetTrigger("Crouch");
             traps[Trap].InstantiateTrap(PlayerPosition);
         }

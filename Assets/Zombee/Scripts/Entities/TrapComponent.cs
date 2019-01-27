@@ -10,6 +10,15 @@ public class TrapComponent : MonoBehaviour
     private bool TrapIsEnable = false;
     private List<GameObject> EnemiesAfected = new List<GameObject>();
     public Animator _anim;
+    ExplodeRigidbody Explode;
+
+    private void Awake()
+    {
+        Explode = GetComponentInChildren<ExplodeRigidbody>();
+        if (Explode != null) {
+            Explode.gameObject.SetActive(false);
+        }
+    }
 
     public void InstantiateTrap(Vector3 Position) {
         Instantiate(gameObject, Position+new Vector3(0,1,0), new Quaternion()); 
@@ -71,7 +80,7 @@ public class TrapComponent : MonoBehaviour
     }
     private void ExecuteDamageTrap() {
 
-        GetComponent<ExplodeRigidbody>().Explode();
+       
 
         foreach (GameObject enemi in EnemiesAfected) {
             enemi.GetComponent<EnemyHP>().Hurt(trapDefinition.Damage, transform.position);
@@ -84,7 +93,9 @@ public class TrapComponent : MonoBehaviour
 
     }
     private void ExecuteWeakTrap() {
-        //Show Smoke
+        Explode.gameObject.SetActive(true);
+        _anim.gameObject.SetActive(false);
+        GetComponentInChildren<ExplodeRigidbody>().Explode(10);
     }
 
 
