@@ -44,7 +44,8 @@ public class Stamina : Entity, IHurtable
 
      public int Hurt(int damage, Vector3 from)
     {
-        StaminaAmount += damage;
+        Debug.LogFormat("Stamina: {0}", StaminaAmount);
+        StaminaAmount -= damage;
 
         if (StaminaAmount <= 0)
             Die();

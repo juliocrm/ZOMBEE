@@ -41,21 +41,21 @@ public class PlayerController : Entity
         else
             enableRightTrigger = true;
 
-        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //trapHandler.PutTrap(0);
+            trapHandler.PutTrap(0,playerMovement.GetPlayerPosition());
         }
-        if (Input.GetKeyDown(KeyCode.JoystickButton1))
+        if (Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //trapHandler.PutTrap(1);
+            trapHandler.PutTrap(1, playerMovement.GetPlayerPosition());
         }
-        if (Input.GetKeyDown(KeyCode.JoystickButton2))
+        if (Input.GetKeyDown(KeyCode.JoystickButton2) || Input.GetKeyDown(KeyCode.Alpha3))
         {
-            //trapHandler.PutTrap(2);
+            trapHandler.PutTrap(2, playerMovement.GetPlayerPosition());
         }
-        if (Input.GetKeyDown(KeyCode.JoystickButton3))
+        if (Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.Alpha4))
         {
-            //trapHandler.PutTrap(3);
+            trapHandler.PutTrap(3, playerMovement.GetPlayerPosition());
         }
     }
 
