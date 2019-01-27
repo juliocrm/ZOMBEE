@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444095862265748942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.994, z: 1.142}
+  m_LocalPosition: {x: 0, y: 2.994, z: 0.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5830787826595633073}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: 0
   _overlapSphereTransform: {fileID: 3622104781273762631}
-  _sphereRadious: 1
+  _sphereRadious: 1.24
   _attackDelay: 1
   _animator: {fileID: 3662654073999577949}
   WeaponObject: {fileID: 3662654073992159439}
@@ -141,6 +141,7 @@ MonoBehaviour:
   - {fileID: 8849241560601034235, guid: 74555d25d2da86848bd6eebf3560e2d1, type: 3}
   - {fileID: 4866342187538278925, guid: b2a265a7c6b6d364e91b5fe54a962f1d, type: 3}
   _anim: {fileID: 3662654073999577949}
+  StaminaCost: 0
 --- !u!114 &5830787826595633075
 MonoBehaviour:
   m_ObjectHideFlags: 0

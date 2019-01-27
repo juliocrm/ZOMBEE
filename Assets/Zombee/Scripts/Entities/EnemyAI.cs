@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using System.Linq;
+using System.Linq.Expressions;
 
 public class EnemyAI : Entity
 {
@@ -130,16 +132,26 @@ public class EnemyAI : Entity
     private bool CheckForPlayer()
     {
         Vector3 toPlayer = (playerTransform.position - enemyTransform.position);
+        toPlayer.y = 0f;
         if (toPlayer.magnitude < enemyScope)
         {
             Vector3 toPlayerNormalized = toPlayer.normalized;
             if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.4f)
             {
-                if (Physics.Raycast(enemyTransform.position, toPlayerNormalized, out RaycastHit hit, enemyScope))
+                Debug.DrawLine(enemyTransform.position + new Vector3(0, 1f, 0f), enemyTransform.position + toPlayerNormalized * enemyScope + new Vector3(0, 1f, 0f), Color.red, 1f, false);
+                RaycastHit[] hits = Physics
+                    .RaycastAll(enemyTransform.position + new Vector3(0, 1f, 0f), toPlayerNormalized, enemyScope).OrderBy(h => h.distance).ToArray();
+                foreach (RaycastHit raycastHit in hits)
                 {
-                    if (hit.collider.GetComponent<PlayerController>())
+                    if (raycastHit.collider.gameObject == gameObject) continue;
+                    if(raycastHit.collider.GetComponent<PlayerController>())
                     {
                         return true;
+                    }
+                    else
+                    {
+                        Debug.LogFormat("Blocked by {0}", raycastHit.collider.gameObject.name);
+                        return false;
                     }
                 }
             }
