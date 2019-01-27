@@ -51,7 +51,10 @@ public class EnemyAI : Entity
         //Transform playerCtrl = transform.root.Find("Player");
         Assert.IsNotNull(playerCtrl, "AI no encontro jugador, esta todo bajo root?");
         playerTransform = playerCtrl.gameObject.transform;
-        
+
+        this.enemyType = enemyType;
+
+
         switch (enemyType)
         {
             case EnemyType.Patrol:
