@@ -20,6 +20,8 @@ public class EnemyAI : Entity
     float enemyScope = 15;
     [SerializeField]
     public float checkSphereRadious = 5;
+    [SerializeField]
+    public float enemyLooseScope = 8;
 
     private Transform playerTransform;
 
@@ -44,6 +46,13 @@ public class EnemyAI : Entity
         enemyAgent = GetComponent<NavMeshAgent>();
         ChasingEnemy = new UnityEvent();
         attackComp = GetComponent<AttackComp>();
+
+        GetComponent<EnemyHP>().Injured.AddListener(ReactToInjure);
+    }
+
+    private void ReactToInjure()
+    {
+        playerOnSight = true;
     }
 
     public void Init(EnemyType enemyType, Transform t, Transform[] pp)
@@ -89,6 +98,7 @@ public class EnemyAI : Entity
                     FollowPlayer();
                 else
                 {
+                    //enemyAgent.enabled = true;
                     switch (enemyType)
                     {
                         case EnemyType.Patrol:
@@ -125,38 +135,56 @@ public class EnemyAI : Entity
         enemyAgent.destination = playerTransform.position;
         enemyAgent.autoBraking = true;
         if (!enemyAgent.pathPending && enemyAgent.remainingDistance < 2f)
+        {
+            //enemyAgent.enabled = false;
+            Vector3 lookVector = playerTransform.position - enemyTransform.position;
+            float heading = Mathf.Atan2(lookVector.x, lookVector.z) * Mathf.Rad2Deg;
+            Quaternion lookAt = Quaternion.Euler(0, heading, 0);
+            enemyTransform.rotation = lookAt;
             attackComp.Attack();
+        }
+        else
+        {
+            //enemyAgent.enabled = true;
+        }
 
     }
 
     private bool CheckForPlayer()
     {
         Vector3 toPlayer = (playerTransform.position - enemyTransform.position);
-        toPlayer.y = 0f;
-        if (toPlayer.magnitude < enemyScope)
+        if (playerOnSight)
         {
-            Vector3 toPlayerNormalized = toPlayer.normalized;
-            if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.4f)
+            return toPlayer.magnitude < enemyLooseScope;
+        }
+        else
+        {
+            toPlayer.y = 0f;
+            if (toPlayer.magnitude < enemyScope)
             {
-                Debug.DrawLine(enemyTransform.position + new Vector3(0, 1f, 0f), enemyTransform.position + toPlayerNormalized * enemyScope + new Vector3(0, 1f, 0f), Color.red, 1f, false);
-                RaycastHit[] hits = Physics
-                    .RaycastAll(enemyTransform.position + new Vector3(0, 1f, 0f), toPlayerNormalized, enemyScope).OrderBy(h => h.distance).ToArray();
-                foreach (RaycastHit raycastHit in hits)
+                Vector3 toPlayerNormalized = toPlayer.normalized;
+                if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.4f)
                 {
-                    if (raycastHit.collider.gameObject == gameObject) continue;
-                    if(raycastHit.collider.GetComponent<PlayerController>())
+                    Debug.DrawLine(enemyTransform.position + new Vector3(0, 1f, 0f), enemyTransform.position + toPlayerNormalized * enemyScope + new Vector3(0, 1f, 0f), Color.red, 1f, false);
+                    RaycastHit[] hits = Physics
+                        .RaycastAll(enemyTransform.position + new Vector3(0, 1f, 0f), toPlayerNormalized, enemyScope).OrderBy(h => h.distance).ToArray();
+                    foreach (RaycastHit raycastHit in hits)
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        Debug.LogFormat("Blocked by {0}", raycastHit.collider.gameObject.name);
-                        return false;
+                        if (raycastHit.collider.gameObject == gameObject) continue;
+                        if(raycastHit.collider.GetComponent<PlayerController>())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            Debug.LogFormat("Blocked by {0}", raycastHit.collider.gameObject.name);
+                            return false;
+                        }
                     }
                 }
             }
+            return false;
         }
-        return false;
     }
 
     private Transform CheckForEnemies()
