@@ -63,7 +63,7 @@ MonoBehaviour:
     TrapType: 2
     TimeToActive: 0
     TimeActive: 5
-    Damage: 10
+    Damage: 50
   _anim: {fileID: 0}
 --- !u!1001 &7381988671760462453
 PrefabInstance:
@@ -72,10 +72,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7381988671598128248}
     m_Modifications:
-    - target: {fileID: 100000, guid: dda65310bc9604c40adec7a0b53517d5, type: 3}
-      propertyPath: m_Name
-      value: SlowTrapModel
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: dda65310bc9604c40adec7a0b53517d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0020905372
@@ -131,6 +127,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: dda65310bc9604c40adec7a0b53517d5, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: dda65310bc9604c40adec7a0b53517d5, type: 3}
+      propertyPath: m_Name
+      value: SlowTrapModel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda65310bc9604c40adec7a0b53517d5, type: 3}
