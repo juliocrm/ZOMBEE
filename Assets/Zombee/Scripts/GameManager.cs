@@ -24,6 +24,7 @@ public struct TrapDef
     public TrapType TrapType;
     public int TimeToActive;
     public int TimeActive;
+    public int Damage;
 }
 
 public class GameManager : MonoBehaviour
