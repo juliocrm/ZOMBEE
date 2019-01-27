@@ -17,6 +17,8 @@ public class PlayerController : Entity
     [SerializeField]
     TrapHandler trapHandler;
 
+    private bool enableRightTrigger = true;
+
     void FixedUpdate()
     {
         // Right Stick to rotate and Left stick to move forward and backwards
@@ -26,11 +28,17 @@ public class PlayerController : Entity
         // Moves and looks wherever the analog stick is
         playerMovement.Move(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
         playerMovement.LookToStick(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-        if (Input.GetAxis("Right Trigger") > 0)
+        
+        if (Input.GetAxis("Right Trigger") > .5f)
         {
-            //playerAttack.Attack();
+            if (enableRightTrigger)
+            {
+                playerAttack.Attack();
+                enableRightTrigger = false;
+            }
         }
+        else
+            enableRightTrigger = true;
 
         if (Input.GetKeyDown(KeyCode.JoystickButton0))
         {

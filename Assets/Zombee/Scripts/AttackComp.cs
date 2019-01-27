@@ -15,6 +15,11 @@ public class AttackComp : Entity
 
     public Vector3 OverlapSpherePosition { get { return _overlapSphereTransform.position; } }
 
+    private void Awake()
+    {
+        SetWeapon(1);
+    }
+
     public bool HasWeapon
     {
         get
@@ -36,6 +41,7 @@ public class AttackComp : Entity
 
     public void Attack()
     {
+        //Debug.Log("Atacking");
         if (_currentWeapon.durability > 0)
             attacking = true;
     }
