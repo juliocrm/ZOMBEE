@@ -14,6 +14,10 @@ public class EnemyHP : Entity, IHurtable
     [SerializeField]
     public GameObject _hitFeedback;
 
+
+    [SerializeField]
+    public GameObject _deadBodyPrefab;
+
     public UnityEvent Injured;
 
     public EnemyHP()
@@ -29,16 +33,22 @@ public class EnemyHP : Entity, IHurtable
 
     public override void Die()
     {
+        GameObject deadBody = Instantiate(_deadBodyPrefab, transform.parent);
+        deadBody.transform.position = transform.position;
+        deadBody.transform.rotation = transform.rotation;
+
         var entities = GetComponents<Entity>();
         foreach (var entity in entities)
             if(entity != this) entity.Die();
+
+        Destroy(gameObject, .05f);
     }
 
     public int Hurt(int damage, Vector3 from)
     {
         hp -= Mathf.RoundToInt(damage * damageMultiplier);
 
-        if (damage < 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
+        if (damage > 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
 
         if (hp <= 0)
             Die();

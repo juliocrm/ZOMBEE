@@ -67,9 +67,6 @@ public class WaveManager : MonoBehaviour
 
         enemyGameObject.transform.parent = transform;
 
-        //enemyGameObject.transform.position = transform.position;
-        //enemyGameObject.transform.rotation = transform.rotation;
-
         enemyGameObject.GetComponent<EnemyAI>().Init(EnemyAI.EnemyType.Assasin, null, null);
 
         OnEntitySpawn.Invoke(enemyGameObject);

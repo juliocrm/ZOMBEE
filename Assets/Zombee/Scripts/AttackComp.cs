@@ -51,8 +51,6 @@ public class AttackComp : Entity
 
             OnAttacked.Invoke();
 
-            Debug.Log("HIT");
-
             foreach (var contact in _collider)
             {
                 if (contact.GetComponent<IHurtable>() != null)

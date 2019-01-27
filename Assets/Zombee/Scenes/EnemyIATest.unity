@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994f984350aaca847b5e0d439499a669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
+  targetTransform: {fileID: 5830787826595633073}
   xOffset: 0
   yOffset: 7
   zOffset: -3
@@ -528,6 +528,7 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 1433545390}
   - {fileID: 1039543658}
+  EnemyType: 1
 --- !u!1 &846272345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,6 +1654,7 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 1433545390}
   - {fileID: 1039543658}
+  EnemyType: 0
 --- !u!4 &2135673988
 Transform:
   m_ObjectHideFlags: 0

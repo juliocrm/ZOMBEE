@@ -111,6 +111,8 @@ MonoBehaviour:
   hp: 100
   _hitFeedback: {fileID: 6255141843283170492, guid: 6c9090d66f55acb45b26d697c60f30b1,
     type: 3}
+  _deadBodyPrefab: {fileID: 4432309767099410943, guid: c57b17a81b6cfb549a021071f4f43379,
+    type: 3}
   Injured:
     m_PersistentCalls:
       m_Calls: []

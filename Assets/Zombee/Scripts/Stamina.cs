@@ -13,6 +13,9 @@ public class Stamina : Entity, IHurtable
     [SerializeField]
     public GameObject _hitFeedback;
 
+    [SerializeField]
+    public GameObject _deadBodyPrefab;
+
     public UnityEvent Injured;
 
     private void Awake()
@@ -24,9 +27,15 @@ public class Stamina : Entity, IHurtable
 
     public override void Die()
     {
+        GameObject deadBody = Instantiate(_deadBodyPrefab, transform.parent);
+        deadBody.transform.position = transform.position;
+        deadBody.transform.rotation = transform.rotation;
+
         var entities = GetComponents<Entity>();
         foreach (var entity in entities)
             entity.Die();
+
+        Destroy(this, .05f);
     }
 
      public int Hurt(int damage, Vector3 from)
