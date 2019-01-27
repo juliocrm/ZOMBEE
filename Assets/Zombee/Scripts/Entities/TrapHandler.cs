@@ -18,7 +18,6 @@ public class TrapHandler : Entity
     }
     public void PutTrap(int Trap, Vector3 PlayerPosition)
     {
-        Debug.Log("puttrap" + Trap);
         traps[Trap].InstantiateTrap(PlayerPosition);
     }
 }
