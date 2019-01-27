@@ -1002,7 +1002,7 @@ MonoBehaviour:
   - Prefab: {fileID: 4421821093120344904, guid: fe38d7a7110eda54491731acbd2defc4,
       type: 3}
     Rate: 1
-  _secondsBetweenWaves: 1
+  _secondsBetweenWaves: 10
   _waveEnemyCount: 1
 --- !u!1 &1355897771
 GameObject:
@@ -1775,12 +1775,12 @@ PrefabInstance:
     - target: {fileID: 4421821093120344897, guid: fe38d7a7110eda54491731acbd2defc4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.5827875
+      value: 9.27
       objectReference: {fileID: 0}
     - target: {fileID: 4421821093120344897, guid: fe38d7a7110eda54491731acbd2defc4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.3153677
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4421821093120344897, guid: fe38d7a7110eda54491731acbd2defc4,
         type: 3}
