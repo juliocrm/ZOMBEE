@@ -125,12 +125,18 @@ public class AttackComp : Entity
     {
         //Get weapon from GameManager
         _currentWeapon = GameManager.Get.weaponDefs[weaponID];
+
         if (owner == WeaponOwner.Player)
+        {
+            Debug.Log(_currentWeapon.durability);
             WeaponObject.SetActive(_currentWeapon.durability > 0);
+        }
         
     }
 
-    private void WeaponEmpty() {        
-        WeaponObject.SetActive(false);
+    private void WeaponEmpty() {
+        Debug.Log("LLAMADO"+name);
+        if (owner == WeaponOwner.Player)
+            WeaponObject.SetActive(false);
     }
 }

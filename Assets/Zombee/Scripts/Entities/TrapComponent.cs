@@ -12,7 +12,7 @@ public class TrapComponent : MonoBehaviour
     public Animator _anim;
 
     public void InstantiateTrap(Vector3 Position) {
-        Instantiate(gameObject, Position+new Vector3(0,-0.8f,0), new Quaternion()); 
+        Instantiate(gameObject, Position+new Vector3(0,1,0), new Quaternion()); 
     }
 
     private void OnTriggerEnter(Collider collision)
