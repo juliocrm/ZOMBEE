@@ -60,9 +60,7 @@ public class AttackComp : Entity
             CanAttack = false;
             StartCoroutine(_WaitToBeAbleToAttack());
 
-            Physics.OverlapSphere(_overlapSphereTransform.position,
-                _sphereRadious);
-            Collider[] _collider = Physics.OverlapSphere(transform.position, 2f);
+            Collider[] _collider = Physics.OverlapSphere(_overlapSphereTransform.position,_sphereRadious);
 
             //Debug.Log("Attack!");
 
