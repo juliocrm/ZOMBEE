@@ -46,6 +46,12 @@ public class Stamina : Entity, IHurtable
         GetComponentInChildren<Animator>().SetBool("Dead", true);
     }
 
+    private IEnumerator _ResetAfterDied()
+    {
+        yield return new WaitForSeconds(2f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
      public float Hurt(float damage, Vector3 from)
     {
         Debug.LogFormat("Stamina: {0}", StaminaAmount);

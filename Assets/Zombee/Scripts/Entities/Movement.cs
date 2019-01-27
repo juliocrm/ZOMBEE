@@ -11,7 +11,7 @@ public class Movement : Entity
     public float movementSpeed = 3f;
     public float tiredSpeed = 2f;
     public float rotationSpeed = 2f;
-    public float runStaminaCost = 2f;
+    public float runStaminaCost = .5f;
 
 
     private void Awake()
