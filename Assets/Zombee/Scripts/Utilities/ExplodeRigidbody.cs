@@ -6,7 +6,7 @@ public class ExplodeRigidbody : MonoBehaviour
 {
     private const float _multiplier = 4;
     // Start is called before the first frame update
-    void Explode(float multiplier)
+    public void Explode(float multiplier)
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
         foreach (var contact in hitColliders)
@@ -25,7 +25,7 @@ public class ExplodeRigidbody : MonoBehaviour
         }
     }
 
-    void Explode()
+    public void Explode()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
         foreach (var contact in hitColliders)

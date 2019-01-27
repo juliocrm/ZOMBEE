@@ -70,6 +70,9 @@ public class TrapComponent : MonoBehaviour
         Destroy(gameObject);
     }
     private void ExecuteDamageTrap() {
+
+        GetComponent<ExplodeRigidbody>().Explode();
+
         foreach (GameObject enemi in EnemiesAfected) {
             enemi.GetComponent<EnemyHP>().Hurt(trapDefinition.Damage, transform.position);
         }
