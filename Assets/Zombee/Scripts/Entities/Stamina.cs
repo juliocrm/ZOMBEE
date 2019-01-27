@@ -8,7 +8,10 @@ public class Stamina : Entity, IHurtable
 {
     const int maxStamina = 100;
 
-    public int StaminaAmount { get; private set; } = maxStamina;
+    [SerializeField]
+    private int StartingStamina = maxStamina;
+
+    public int StaminaAmount { get; private set; }
 
     [SerializeField]
     public GameObject _hitFeedback;
@@ -21,6 +24,7 @@ public class Stamina : Entity, IHurtable
     private void Awake()
     {
         Injured = new UnityEvent();
+        StaminaAmount = StartingStamina;
 
         Assert.IsNotNull(_hitFeedback, "Asigna las particulas _hitFeedback para sangrar cuando golpeen");
     }
