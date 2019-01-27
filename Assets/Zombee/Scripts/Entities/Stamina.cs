@@ -37,7 +37,7 @@ public class Stamina : Entity, IHurtable
 
         var entities = GetComponents<Entity>();
         foreach (var entity in entities)
-            entity.Die();
+            if(entity != this) entity.Die();
 
         Destroy(this, .05f);
     }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7480252298648817168}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,8 +48,8 @@ GameObject:
   - component: {fileID: 5712286415310399835}
   - component: {fileID: 4421821093120344896}
   - component: {fileID: 1270715300318164813}
-  m_Layer: 0
-  m_Name: Enemy
+  m_Layer: 10
+  m_Name: EnemyBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScope: 15
+  checkSphereRadious: 5
   ChasingEnemy:
     m_PersistentCalls:
       m_Calls: []

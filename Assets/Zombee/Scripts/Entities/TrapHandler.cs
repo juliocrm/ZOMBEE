@@ -9,7 +9,7 @@ public class TrapHandler : Entity
 
     public override void Die()
     {
-        throw new System.NotImplementedException();
+        enabled = false;
     }
 
     public void CraftTrap(int i)
@@ -18,6 +18,9 @@ public class TrapHandler : Entity
     }
     public void PutTrap(int Trap, Vector3 PlayerPosition)
     {
-        traps[Trap].InstantiateTrap(PlayerPosition);
+        if (enabled)
+        {
+            traps[Trap].InstantiateTrap(PlayerPosition);
+        }
     }
 }

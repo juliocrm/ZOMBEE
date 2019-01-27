@@ -94,7 +94,7 @@ public class AttackComp : Entity
                         if (owner == WeaponOwner.Player)
                             _currentWeapon.durability--;
 
-                        Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
+                        //Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
                         if (_currentWeapon.durability <= 0)
                         {
                             WeaponEmpty();

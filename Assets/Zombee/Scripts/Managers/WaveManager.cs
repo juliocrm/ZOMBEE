@@ -74,7 +74,6 @@ public class WaveManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(_secondsBetweenWaves);
             
             for (int i = 0; i < _waveEnemyCount; i++)
             {
@@ -107,6 +106,7 @@ public class WaveManager : MonoBehaviour
                     }
                     spawnRateAcc -= spawnDef.Rate;
                 }
+                yield return new WaitForSeconds(_secondsBetweenWaves);
 
             }
         }
@@ -124,6 +124,6 @@ public class WaveManager : MonoBehaviour
 
         OnEntitySpawn.Invoke(enemyGameObject);
 
-        Debug.LogFormat("Spawn Enemy AI *{0}* Prefab {1}", enemyType, prefab.name);
+        //Debug.LogFormat("Spawn Enemy AI *{0}* Prefab {1}", enemyType, prefab.name);
     }
 }

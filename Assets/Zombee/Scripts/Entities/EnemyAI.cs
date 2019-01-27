@@ -20,7 +20,6 @@ public class EnemyAI : Entity
     public float checkSphereRadious = 5;
 
     private Transform playerTransform;
-    private readonly int layerMask = 1 << 9;
 
     public Transform[] PatrolPoints { get; set; }
     public Transform TargetTransform { get; set; }
@@ -83,6 +82,7 @@ public class EnemyAI : Entity
             else
             {
                 playerOnSight = CheckForPlayer();
+                print(playerOnSight);
                 if (playerOnSight)
                     FollowPlayer();
                 else
@@ -134,9 +134,15 @@ public class EnemyAI : Entity
         {
             Vector3 toPlayerNormalized = toPlayer.normalized;
             if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.4f)
-                if (Physics.Raycast(enemyTransform.position, toPlayerNormalized, out RaycastHit hit, enemyScope, layerMask))
+            {
+                if (Physics.Raycast(enemyTransform.position, toPlayerNormalized, out RaycastHit hit, enemyScope))
+                {
                     if (hit.collider.GetComponent<PlayerController>())
+                    {
                         return true;
+                    }
+                }
+            }
         }
         return false;
     }
