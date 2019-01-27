@@ -16,6 +16,7 @@ public class EnemyAI : Entity
     float enemyScope = 15;
 
     public Transform playerTransform;
+    private readonly int layerMask = 1 << 9;
 
     public Transform[] PatrolPoints { get; set; }
     public Transform TargetTransform { get; set; }
@@ -99,23 +100,13 @@ public class EnemyAI : Entity
     private bool CheckForPlayer()
     {
         Vector3 toPlayer = (playerTransform.position - enemyTransform.position);
-        //print("toPlayer.magnitude < enemyScope " + (toPlayer.magnitude < enemyScope));
         if (toPlayer.magnitude < enemyScope)
         {
             Vector3 toPlayerNormalized = toPlayer.normalized;
-            //print("Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.5f " + (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.5f));
-            if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0f)
-                if (Physics.Raycast(enemyTransform.position, toPlayerNormalized, out RaycastHit hit, enemyScope))
-                {
-                    if(playerOnSight)
-                        Debug.Log(1);
+            if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.4f)
+                if (Physics.Raycast(enemyTransform.position, toPlayerNormalized, out RaycastHit hit, enemyScope, layerMask))
                     if (hit.collider.GetComponent<PlayerController>())
-                    {
-                        if (playerOnSight)
-                            Debug.Log(2);
                         return true;
-                    }
-                }
         }
         return false;
     }
