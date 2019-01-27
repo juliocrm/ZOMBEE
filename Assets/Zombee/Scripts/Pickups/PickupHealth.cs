@@ -1,13 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PickupHealth : MonoBehaviour
 {
-    public int StaminaIncrease;
-    public int Time;
+    public float StaminaIncrease = 35f;
+    public float StaminaTransferRate = 20f;
     Stamina staminaComponent;
     bool Incontact = false;
+    [SerializeField]
+    private GameObject _HealFeedback;
+
+    private void Awake()
+    {
+        Assert.IsNotNull(_HealFeedback, "Falta asignar el _HealFeedback para mostrar curacion");
+        _HealFeedback.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -15,13 +24,32 @@ public class PickupHealth : MonoBehaviour
         if (staminaComponent != null) {
             Incontact = true;
             StartCoroutine(TimeToReceibeStamina());
+            _HealFeedback.SetActive(true);
         }   
     }
-    private IEnumerator TimeToReceibeStamina() {
-        yield return new WaitForSeconds(Time);
-        if (Incontact) {
-            staminaComponent.Hurt(StaminaIncrease, transform.position);
+
+    private IEnumerator TimeToReceibeStamina()
+    {
+        float accum = 0f;
+        while (StaminaIncrease > 0 && staminaComponent)
+        {
+            float delta = StaminaTransferRate * Time.deltaTime;
+            StaminaIncrease -= StaminaTransferRate * Time.deltaTime;
+            accum += delta;
+            if (accum > 1f)
+            {
+                int amountToTransfer = (int) accum;
+                staminaComponent.Hurt(-amountToTransfer, transform.position);
+                accum -= amountToTransfer;
+            }
+            yield return 0;
+        }
+
+        if (StaminaIncrease <= 0)
+        {
             gameObject.SetActive(false);
+            _HealFeedback.SetActive(false);
+            StopCoroutine(TimeToReceibeStamina());
         }
     }
     
@@ -33,6 +61,7 @@ public class PickupHealth : MonoBehaviour
             StopCoroutine(TimeToReceibeStamina());
             Incontact = false;
             staminaComponent = null;
+            _HealFeedback.SetActive(false);
         }
     }
 }

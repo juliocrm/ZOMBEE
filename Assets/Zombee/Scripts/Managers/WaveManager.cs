@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -14,11 +15,19 @@ public class WaveManager : MonoBehaviour
     public struct EnemySpawnDef
     {
         public GameObject Prefab;
-        public float Rate;
+        public int Rate;
+    }
+
+    [Serializable]
+    public struct EnemyTypeRateDef
+    {
+        public EnemyAI.EnemyType EnemyType;
+        public int Rate;
     }
 
     [SerializeField]
     public EntitySpawnEvent OnEntitySpawn;
+
     [SerializeField]
     private EnemySpawnDef[] _EnemiesToSpawn;
     [SerializeField]
@@ -26,7 +35,20 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private int _waveEnemyCount = 1;
 
+    [SerializeField]
+    private EnemyTypeRateDef[] _enemyTypeRates =
+        new []
+        {
+            new EnemyTypeRateDef(){ EnemyType = EnemyAI.EnemyType.Assasin, Rate = 10},
+            new EnemyTypeRateDef(){ EnemyType = EnemyAI.EnemyType.Destroyer, Rate = 80},
+            new EnemyTypeRateDef(){ EnemyType = EnemyAI.EnemyType.Patrol, Rate = 10},
+        };
+
+    private int _totalEnemyTypeRate;
+    private int _totalSpawnDefRate;
+
     private SpawnPoint[] _spawnPoints;
+    private EnemyTargetPoint[] _enemyTargetPoints;
 
     WaveManager()
     {
@@ -38,8 +60,14 @@ public class WaveManager : MonoBehaviour
         _spawnPoints = GetComponentsInChildren<SpawnPoint>();
         Assert.IsTrue(_spawnPoints.Length > 0, "SpawnPoints no encontrados");
 
+
+        _enemyTargetPoints = GetComponentsInChildren<EnemyTargetPoint>();
+        Assert.IsTrue(_enemyTargetPoints.Length > 0, "EnemyTargetPoints no encontrados");
+
         StartCoroutine(_Sequence());
 
+        _totalSpawnDefRate = _EnemiesToSpawn.Sum(spawnDef => spawnDef.Rate);
+        _totalEnemyTypeRate = _enemyTypeRates.Sum(rateDef => rateDef.Rate);
     }
 
     private IEnumerator _Sequence()
@@ -53,22 +81,49 @@ public class WaveManager : MonoBehaviour
                 int spawnPointIndx = Random.Range(0, _spawnPoints.Length);
                 SpawnPoint spawnPoint = _spawnPoints[spawnPointIndx];
 
+                var enemyType = EnemyAI.EnemyType.Destroyer;
+                int enemyTypeRateAcc = Random.Range(0, _totalEnemyTypeRate);
 
-                float randomType = UnityEngine.Random.Range(0f, 1f);
+                foreach (EnemyTypeRateDef enemyTypeRate in _enemyTypeRates)
+                {
+                    if (enemyTypeRateAcc < enemyTypeRate.Rate)
+                    {
+                        enemyType = enemyTypeRate.EnemyType;
+                        break;
+                    }
+                    else
+                    {
+                        enemyTypeRateAcc -= enemyTypeRate.Rate;
+                    }
+                }
 
-                SpawnEnemyOnPositon(_EnemiesToSpawn[Random.Range(0, _EnemiesToSpawn.Length)].Prefab, spawnPoint.transform, Random.Range(0, 2));
+                int spawnRateAcc = Random.Range(0, _totalSpawnDefRate);
+                foreach (EnemySpawnDef spawnDef in _EnemiesToSpawn)
+                {
+                    if (spawnRateAcc < spawnDef.Rate)
+                    {
+                        SpawnEnemyOnPositon(spawnDef.Prefab, spawnPoint.transform, enemyType);
+                        break;
+                    }
+                    spawnRateAcc -= spawnDef.Rate;
+                }
+
             }
         }
     }
 
-    public void SpawnEnemyOnPositon(GameObject prefab, Transform transform, int enemyType)
+    public void SpawnEnemyOnPositon(GameObject prefab, Transform transform, EnemyAI.EnemyType enemyType)
     {
         GameObject enemyGameObject = Instantiate(prefab, transform);
 
         enemyGameObject.transform.parent = transform;
 
-        enemyGameObject.GetComponent<EnemyAI>().Init(EnemyAI.EnemyType.Assasin, null, null);
+        Transform targetPoint = _enemyTargetPoints[Random.Range(0, _enemyTargetPoints.Length)].transform;
+
+        enemyGameObject.GetComponent<EnemyAI>().Init(enemyType, targetPoint, new[]{ targetPoint, targetPoint });
 
         OnEntitySpawn.Invoke(enemyGameObject);
+
+        Debug.LogFormat("Spawn Enemy AI *{0}* Prefab {1}", enemyType, prefab.name);
     }
 }

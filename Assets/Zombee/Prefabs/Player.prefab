@@ -189,8 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3629631dce96b4596984cd2715a67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: 0
   _overlapSphereTransform: {fileID: 3622104781273762631}
   _sphereRadious: 1
+  _attackDelay: 0.75
   OnAttacked:
     m_PersistentCalls:
       m_Calls: []
@@ -238,9 +240,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafeeeddb9a928041a762bcee5560b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitFeedback: {fileID: 4432309767099410943, guid: c57b17a81b6cfb549a021071f4f43379,
+  StartingStamina: 10
+  _hitFeedback: {fileID: 6255141843283170492, guid: 6c9090d66f55acb45b26d697c60f30b1,
     type: 3}
-  _deadBodyPrefab: {fileID: 0}
+  _deadBodyPrefab: {fileID: 4432309767099410943, guid: c57b17a81b6cfb549a021071f4f43379,
+    type: 3}
   Injured:
     m_PersistentCalls:
       m_Calls: []
