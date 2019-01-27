@@ -10,7 +10,7 @@ public class EnemyHP : Entity, IHurtable
 
     private float damageMultiplier = 1;
 
-    UnityEvent Injured;
+    public UnityEvent Injured;
 
     public EnemyHP()
     {

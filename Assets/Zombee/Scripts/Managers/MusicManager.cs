@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 
 public class MusicManager : MonoBehaviour
 {
@@ -6,11 +8,16 @@ public class MusicManager : MonoBehaviour
     private float _volumeChangeOverTime = .25f;
 
     [SerializeField]
+    private float _waitToGoBackToBaseMusic = 3f;
+
+    [SerializeField]
     private AudioClip _baseClip;
     [SerializeField]
     private AudioClip _chaseClip;
     [SerializeField]
     private AudioClip _combatClip;
+
+    private Coroutine _backToBaseTimerHandle;
 
     private AudioSource _audioBase;
     private AudioSource _audioChase;
@@ -33,6 +40,8 @@ public class MusicManager : MonoBehaviour
         _audioBase.clip = _baseClip;
         _audioChase.clip = _chaseClip;
         _audioCombat.clip = _combatClip;
+
+        GetComponent<WaveManager>().OnEntitySpawn.AddListener(OnEntitySpawn);
     }
 
     public void Init()
@@ -62,6 +71,9 @@ public class MusicManager : MonoBehaviour
         _raiseBase = false;
         _raiseChase = true;
         _raiseCombat = false;
+
+        if(_backToBaseTimerHandle != null) StopCoroutine(_backToBaseTimerHandle);
+        _backToBaseTimerHandle = StartCoroutine(StartBackToBaseTimer());
     }
 
     public void PlayCombat()
@@ -69,6 +81,33 @@ public class MusicManager : MonoBehaviour
         _raiseBase = false;
         _raiseChase = false;
         _raiseCombat = true;
+
+        if (_backToBaseTimerHandle != null) StopCoroutine(_backToBaseTimerHandle);
+        _backToBaseTimerHandle = StartCoroutine(StartBackToBaseTimer());
+    }
+
+    private IEnumerator StartBackToBaseTimer()
+    {
+        yield return new WaitForSeconds(_waitToGoBackToBaseMusic);
+        _backToBaseTimerHandle = null;
+        PlayBase();
+    }
+
+    private void OnEntitySpawn(GameObject entity)
+    {
+        EnemyHP enemyHp = entity.GetComponent<EnemyHP>();
+        if (enemyHp)
+        {
+            enemyHp.Injured.AddListener(PlayCombat);
+        }
+
+        Stamina stamina = entity.GetComponent<Stamina>();
+        if (stamina)
+        {
+            stamina.Injured.AddListener(PlayCombat);
+        }
+
+        // TODO: Asignar listener a enemey AI al detectar player
     }
 
     private void Update()

@@ -10,7 +10,7 @@ public class Stamina : Entity, IHurtable
     int stamina =  maxStamina;
     public int StaminaAmount { get; set; }
 
-    UnityEvent Injured;
+    public UnityEvent Injured;
 
     private void Awake()
     {
