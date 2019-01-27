@@ -21,6 +21,10 @@ public class AttackComp : Entity
     public float _sphereRadious;
     [SerializeField]
     public float _attackDelay = .75f;
+    [SerializeField]
+    public Animator _animator;
+
+    public GameObject WeaponObject;
 
     public bool CanAttack { get; private set; }
 
@@ -31,7 +35,7 @@ public class AttackComp : Entity
     private void Start()
     {
         CanAttack = true;
-        SetWeapon(0);
+        SetWeapon(1);
     }
 
     public bool HasWeapon
@@ -59,7 +63,7 @@ public class AttackComp : Entity
         {
             CanAttack = false;
             StartCoroutine(_WaitToBeAbleToAttack());
-
+            _animator.SetTrigger("Attack");
             Collider[] _collider = Physics.OverlapSphere(_overlapSphereTransform.position,_sphereRadious);
 
             //Debug.Log("Attack!");
@@ -121,9 +125,12 @@ public class AttackComp : Entity
     {
         //Get weapon from GameManager
         _currentWeapon = GameManager.Get.weaponDefs[weaponID];
+        if (owner == WeaponOwner.Player)
+            WeaponObject.SetActive(_currentWeapon.durability > 0);
+        
     }
 
-    private void WeaponEmpty() {
-        // TODO Destroy weapon
+    private void WeaponEmpty() {        
+        WeaponObject.SetActive(false);
     }
 }
