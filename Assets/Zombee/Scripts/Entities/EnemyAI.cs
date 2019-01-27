@@ -26,6 +26,7 @@ public class EnemyAI : Entity
     public UnityEvent ChasingEnemy;
 
     Transform enemyTransform;
+    AttackComp attackComp;
     NavMeshAgent enemyAgent;
     EnemyType enemyType;
 
@@ -38,11 +39,7 @@ public class EnemyAI : Entity
         enemyTransform = transform;
         enemyAgent = GetComponent<NavMeshAgent>();
         ChasingEnemy = new UnityEvent();
-    }
-
-    private void Start()
-    {
-
+        attackComp = GetComponent<AttackComp>();
     }
 
     public void Init(EnemyType enemyType, Transform t, Transform[] pp)
@@ -120,9 +117,11 @@ public class EnemyAI : Entity
     
     void FollowPlayer()
     {
-        print("Following");
         enemyAgent.destination = playerTransform.position;
         enemyAgent.autoBraking = true;
+        if (!enemyAgent.pathPending && enemyAgent.remainingDistance < 2f)
+            attackComp.Attack();
+
     }
 
     private bool CheckForPlayer()

@@ -47,7 +47,7 @@ public class AttackComp : Entity
 
     public void Attack()
     {
-        if (_currentWeapon.durability > 0)
+        if (_currentWeapon.durability > 0 && CanAttack)
         {
             CanAttack = false;
             StartCoroutine(_WaitToBeAbleToAttack());
