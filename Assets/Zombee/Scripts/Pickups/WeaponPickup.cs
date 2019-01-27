@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class WeaponPickup : MonoBehaviour
 {
 
     public int TypeWeapon;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        AttackComp _attackComp =collision.gameObject.GetComponent<AttackComp>();
+        AttackComp _attackComp = collider.gameObject.GetComponent<AttackComp>();
         if (_attackComp != null) {
             if (!_attackComp.HasWeapon) {
                 _attackComp.SetWeapon(TypeWeapon);
