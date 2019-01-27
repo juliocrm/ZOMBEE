@@ -39,7 +39,7 @@ public class PickupHealth : MonoBehaviour
             if (accum > 1f)
             {
                 int amountToTransfer = (int) accum;
-                staminaComponent.Hurt(amountToTransfer, transform.position);
+                staminaComponent.Hurt(-amountToTransfer, transform.position);
                 accum -= amountToTransfer;
             }
             yield return 0;

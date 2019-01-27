@@ -50,7 +50,7 @@ public class Stamina : Entity, IHurtable
         if (StaminaAmount <= 0)
             Die();
 
-        if(damage < 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
+        if(damage > 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
 
         Injured.Invoke();
 
