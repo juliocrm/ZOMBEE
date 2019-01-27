@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8379810afe4fe434a9428f2527740c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropWeaponPrefab: {fileID: 1110908824695191478, guid: 0cfc52ee2e8954c45a41ee11703a6c70,
+  _dropWeaponPrefab: {fileID: 4200933030059310737, guid: 5522345a4be0fdd4f966403c5d4fc202,
     type: 3}
   probability: 0.5
 --- !u!114 &4421821093120344907
