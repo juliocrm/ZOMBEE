@@ -50,7 +50,7 @@ MonoBehaviour:
     TrapType: 1
     TimeToActive: 2
     TimeActive: 3
-    Damage: 1
+    Damage: 40
   _anim: {fileID: 568739332727346563}
 --- !u!135 &1150001762
 SphereCollider:

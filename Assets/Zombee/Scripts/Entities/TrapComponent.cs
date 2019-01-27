@@ -26,11 +26,12 @@ public class TrapComponent : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-
+       
 
         EnemyAI Enemi = collision.gameObject.GetComponent<EnemyAI>();
         if (Enemi != null)
         {
+            Debug.Log("EnimiEntry");
             EnemiesAfected.Add(Enemi.gameObject);
             if (!TrapIsEnable)
             {
@@ -87,10 +88,17 @@ public class TrapComponent : MonoBehaviour
         }
     }
     private void ExecuteSlowTrap() {
+        foreach (GameObject enemi in EnemiesAfected)
+        {
+            enemi.GetComponent<EnemyAI>().MakeSlow();
+        }
         
     }
     private void ExecuteTurnTrap() {
-
+        foreach (GameObject enemi in EnemiesAfected)
+        {
+            enemi.GetComponent<EnemyAI>().TurnAgainst();
+        }
     }
     private void ExecuteWeakTrap() {
         Explode.gameObject.SetActive(true);

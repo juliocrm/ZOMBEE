@@ -23,6 +23,8 @@ public class EnemyAI : Entity
     [SerializeField]
     public float enemyLooseScope = 8;
 
+    private float CurrentSpeed=0;
+
     private Transform playerTransform;
 
     public Transform[] PatrolPoints { get; set; }
@@ -48,6 +50,7 @@ public class EnemyAI : Entity
         attackComp = GetComponent<AttackComp>();
 
         GetComponent<EnemyHP>().Injured.AddListener(ReactToInjure);
+        CurrentSpeed = enemyAgent.speed;
     }
 
     private void ReactToInjure()
@@ -236,7 +239,15 @@ public class EnemyAI : Entity
         isTurned = true;
         StartCoroutine(TurnAgainstProcess());
         StartCoroutine(FinishTurnProcess());
-    }    
+    }
+    public void MakeSlow() {
+        enemyAgent.speed = CurrentSpeed * .5f;
+    }
+    IEnumerator FinishTurnSlow()
+    {
+        yield return new WaitForSeconds(5);
+        enemyAgent.speed = CurrentSpeed ;
+    }
 
     IEnumerator TurnAgainstProcess()
     {
@@ -264,7 +275,5 @@ public class EnemyAI : Entity
     public override void Die()
     {
         isAlive = false;
-    }
-    public void SlowDown() {
     }
 }
