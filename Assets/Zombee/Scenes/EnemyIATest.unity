@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 59473570}
   - component: {fileID: 59473577}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,6 +177,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
+  Injured:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!136 &59473573
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -661,8 +666,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829027985}
+  - component: {fileID: 829027986}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: TestAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -682,6 +688,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &829027986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829027984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8baba86b39d79764ba7bbe56f576d50a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPref: {fileID: 59473569}
+  targetTransform: {fileID: 1440773432}
+  patrolPoints:
+  - {fileID: 1433545390}
+  - {fileID: 1039543658}
 --- !u!1 &846272345
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +938,7 @@ GameObject:
   - component: {fileID: 1039543656}
   - component: {fileID: 1039543655}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: PatrolPoint_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1024,6 +1047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _volumeChangeOverTime: 0.25
+  _waitToGoBackToBaseMusic: 3
   _baseClip: {fileID: 8300000, guid: 59a4603db8606094bbbf660578591116, type: 3}
   _chaseClip: {fileID: 8300000, guid: a796b759af2e90643869b1542c15c032, type: 3}
   _combatClip: {fileID: 8300000, guid: a796b759af2e90643869b1542c15c032, type: 3}
@@ -1163,7 +1187,7 @@ GameObject:
   - component: {fileID: 1433545388}
   - component: {fileID: 1433545387}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: PatrolPoint_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1792,6 +1816,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafeeeddb9a928041a762bcee5560b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Injured:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &2107939501
 GameObject:
   m_ObjectHideFlags: 0
