@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Stamina : Entity, IHurtable
 {
-    const int maxStamina = 100;
+    public const int maxStamina = 100;
 
     [SerializeField]
     private int StartingStamina = maxStamina;

@@ -11,6 +11,8 @@ public class PickupHealth : MonoBehaviour
     bool Incontact = false;
     [SerializeField]
     private GameObject _HealFeedback;
+    [SerializeField]
+    private GameObject _HoneyObject;
 
     private void Awake()
     {
@@ -24,15 +26,15 @@ public class PickupHealth : MonoBehaviour
         if (staminaComponent != null) {
             Incontact = true;
             StartCoroutine(TimeToReceibeStamina());
-            _HealFeedback.SetActive(true);
         }   
     }
 
     private IEnumerator TimeToReceibeStamina()
     {
         float accum = 0f;
-        while (StaminaIncrease > 0 && staminaComponent)
+        while (StaminaIncrease > 0 && staminaComponent && staminaComponent.StaminaAmount < Stamina.maxStamina)
         {
+            _HealFeedback.SetActive(true);
             float delta = StaminaTransferRate * Time.deltaTime;
             StaminaIncrease -= StaminaTransferRate * Time.deltaTime;
             accum += delta;
@@ -45,11 +47,13 @@ public class PickupHealth : MonoBehaviour
             yield return 0;
         }
 
+        _HealFeedback.SetActive(false);
+        StopCoroutine(TimeToReceibeStamina());
+
         if (StaminaIncrease <= 0)
         {
-            gameObject.SetActive(false);
-            _HealFeedback.SetActive(false);
-            StopCoroutine(TimeToReceibeStamina());
+            _HoneyObject.SetActive(false);
+            enabled = false;
         }
     }
     
