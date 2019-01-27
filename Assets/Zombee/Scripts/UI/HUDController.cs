@@ -82,6 +82,10 @@ public class HUDController : MonoBehaviour
         var playerCtrl = transform.root.GetComponentInChildren<PlayerController>();
         _playerStamina = playerCtrl.gameObject.GetComponent<Stamina>();
         _playerAttackComp = playerCtrl.gameObject.GetComponent<AttackComp>();
+        SetBombTrap(true);
+        SetStickTrap(true);
+        SetTurnTrap(true);
+        SetWeak(true);
     }
 
 
