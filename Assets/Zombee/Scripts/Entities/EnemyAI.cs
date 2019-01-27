@@ -162,4 +162,6 @@ public class EnemyAI : Entity
     {
         isAlive = false;
     }
+    public void SlowDown() {
+    }
 }
