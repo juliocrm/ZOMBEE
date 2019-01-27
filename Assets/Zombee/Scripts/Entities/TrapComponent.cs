@@ -21,7 +21,7 @@ public class TrapComponent : MonoBehaviour
     }
 
     public void InstantiateTrap(Vector3 Position) {
-        Instantiate(gameObject, Position+new Vector3(0,1,0), new Quaternion()); 
+        Instantiate(gameObject, Position+new Vector3(0,2.5f,0), new Quaternion()); 
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -51,7 +51,7 @@ public class TrapComponent : MonoBehaviour
 
     private IEnumerator TimeToExecuteTrap(float Time) {
         if (trapDefinition.TrapType == TrapType.Weak) {
-            gameObject.transform.Translate(0, 0, .1f);
+            gameObject.transform.Translate(0, 0, .3f);
         }
         yield return new WaitForSeconds(Time);
         TrapIsActive = true;
