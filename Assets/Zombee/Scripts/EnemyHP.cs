@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHP : Entity, IHurtable
 {
@@ -9,9 +10,16 @@ public class EnemyHP : Entity, IHurtable
 
     private float damageMultiplier = 1;
 
+    UnityEvent Injured;
+
     public EnemyHP()
     {
 
+    }
+
+    private void Awake()
+    {
+        Injured = new UnityEvent();
     }
 
     public override void Die()
@@ -26,6 +34,8 @@ public class EnemyHP : Entity, IHurtable
         hp -= Mathf.RoundToInt(damage * damageMultiplier);
         if (hp <= 0)
             Die();
+
+        Injured.Invoke();
 
         return hp;
     }
