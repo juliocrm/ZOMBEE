@@ -106,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 5712286415310399835, guid: fe38d7a7110eda54491731acbd2defc4,
         type: 3}
       propertyPath: _attackDelay
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5712286415310399835, guid: fe38d7a7110eda54491731acbd2defc4,
         type: 3}

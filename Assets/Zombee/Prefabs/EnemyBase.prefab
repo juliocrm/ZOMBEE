@@ -154,7 +154,7 @@ MonoBehaviour:
   owner: 1
   _overlapSphereTransform: {fileID: 7480252298648817168}
   _sphereRadious: 1
-  _attackDelay: 2
+  _attackDelay: 4
   _animator: {fileID: 8963399831731780513}
   WeaponObject: {fileID: 8963399831741155379}
   OnAttacked:

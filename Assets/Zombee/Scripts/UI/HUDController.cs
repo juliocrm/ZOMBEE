@@ -30,9 +30,12 @@ public class HUDController : MonoBehaviour
     [SerializeField]
     private Text _weaponAvailableMessageLabel;
 
+    private Stamina _playerStamina;
+    private AttackComp _playerAttackComp;
+
     #region Set Icons
 
-    public void SetStamina(int stamina) {
+    public void SetStamina(float stamina) {
         staminaBarFill.fillAmount = stamina;
     }
 
@@ -73,6 +76,20 @@ public class HUDController : MonoBehaviour
         _weakTrapIcon.color = color;
     }
     #endregion
+
+    private void Start()
+    {
+        var playerCtrl = transform.root.GetComponentInChildren<PlayerController>();
+        _playerStamina = playerCtrl.gameObject.GetComponent<Stamina>();
+        _playerAttackComp = playerCtrl.gameObject.GetComponent<AttackComp>();
+    }
+
+
+    private void Update()
+    {
+        SetStamina(_playerStamina.StaminaAmount / Stamina.maxStamina);
+        SetWeapon(_playerAttackComp.GetWeaponDef());
+    }
 
     public void WeaponAvailableMessage(bool available, WeaponDef weaponDef)
     {

@@ -46,6 +46,11 @@ public class AttackComp : Entity
         }
     }
 
+    public WeaponDef GetWeaponDef()
+    {
+        return _currentWeapon; 
+    }
+
 
     public override void Die()
     {
