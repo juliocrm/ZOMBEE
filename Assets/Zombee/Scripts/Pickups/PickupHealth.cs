@@ -31,7 +31,7 @@ public class PickupHealth : MonoBehaviour
     private IEnumerator TimeToReceibeStamina()
     {
         float accum = 0f;
-        while (StaminaIncrease > 0)
+        while (StaminaIncrease > 0 && staminaComponent)
         {
             float delta = StaminaTransferRate * Time.deltaTime;
             StaminaIncrease -= StaminaTransferRate * Time.deltaTime;
@@ -44,8 +44,13 @@ public class PickupHealth : MonoBehaviour
             }
             yield return 0;
         }
-        gameObject.SetActive(false);
-        _HealFeedback.SetActive(false);
+
+        if (StaminaIncrease <= 0)
+        {
+            gameObject.SetActive(false);
+            _HealFeedback.SetActive(false);
+            StopCoroutine(TimeToReceibeStamina());
+        }
     }
     
 

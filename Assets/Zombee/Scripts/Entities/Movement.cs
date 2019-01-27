@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,8 +30,16 @@ public class Movement : Entity
 
         currentRotation.x = Mathf.Lerp(currentRotation.x, 0f, .1f);
         currentRotation.z = Mathf.Lerp(currentRotation.z, 0f, .1f);
-        
-        playerRigidbody.rotation = currentRotation;
+
+
+        try
+        {
+            playerRigidbody.rotation = currentRotation;
+        }
+        catch (Exception e)
+        {
+            playerRigidbody.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
     }
 
     public void Move(float forward)
