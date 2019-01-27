@@ -125,6 +125,7 @@ public class AttackComp : Entity
     {
         //Get weapon from GameManager
         _currentWeapon = GameManager.Get.weaponDefs[weaponID];
+        CanAttack = true;
 
         if (owner == WeaponOwner.Player)
         {

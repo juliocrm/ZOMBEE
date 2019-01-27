@@ -11,7 +11,8 @@ public class Movement : Entity
     public float movementSpeed = 3f;
     public float tiredSpeed = 2f;
     public float rotationSpeed = 2f;
-    
+    public float runStaminaCost = 2f;
+
 
     private void Awake()
     {
@@ -59,8 +60,8 @@ public class Movement : Entity
             //print(playerStamina.StaminaAmount);
             float currentSpeed = (playerStamina.StaminaAmount > 5) ? movementSpeed : tiredSpeed;
             Vector3 newPos = playerRigidbody.position + direction * currentSpeed * Time.deltaTime;
-            //if(playerStamina.StaminaAmount > 5)
-            //  playerStamina.Hurt(runStaminaCost);
+            if(playerStamina.StaminaAmount > 5)
+                playerStamina.Hurt(runStaminaCost * Time.deltaTime, transform.position);
             playerRigidbody.MovePosition(newPos);
         }
     }

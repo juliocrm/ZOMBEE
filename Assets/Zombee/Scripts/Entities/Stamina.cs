@@ -11,13 +11,15 @@ public class Stamina : Entity, IHurtable
     [SerializeField]
     private int StartingStamina = maxStamina;
 
-    public int StaminaAmount { get; private set; }
+    public float StaminaAmount { get; private set; }
 
     [SerializeField]
     public GameObject _hitFeedback;
 
     [SerializeField]
     public GameObject _deadBodyPrefab;
+    
+    public Animator _animator;
 
     public UnityEvent Injured;
 
@@ -25,6 +27,8 @@ public class Stamina : Entity, IHurtable
     {
         Injured = new UnityEvent();
         StaminaAmount = StartingStamina;
+
+        _animator = GetComponentInChildren<Animator>();
 
         Assert.IsNotNull(_hitFeedback, "Asigna las particulas _hitFeedback para sangrar cuando golpeen");
     }
@@ -39,10 +43,10 @@ public class Stamina : Entity, IHurtable
         foreach (var entity in entities)
             if(entity != this) entity.Die();
 
-        Destroy(this, .05f);
+        GetComponentInChildren<Animator>().SetBool("Dead", true);
     }
 
-     public int Hurt(int damage, Vector3 from)
+     public float Hurt(float damage, Vector3 from)
     {
         Debug.LogFormat("Stamina: {0}", StaminaAmount);
         StaminaAmount -= damage;
@@ -50,7 +54,11 @@ public class Stamina : Entity, IHurtable
         if (StaminaAmount <= 0)
             Die();
 
-        if(damage > 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
+        if (damage > 0 && (from - transform.position).sqrMagnitude > 0.1f)
+        {
+            Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
+            _animator.SetTrigger("Hit");
+        }
 
         Injured.Invoke();
 

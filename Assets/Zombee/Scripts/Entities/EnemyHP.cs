@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class EnemyHP : Entity, IHurtable
 {
     [SerializeField]
-    private int hp;
+    private float hp;
 
     private float damageMultiplier = 1;
 
@@ -19,6 +19,8 @@ public class EnemyHP : Entity, IHurtable
     public GameObject _deadBodyPrefab;
 
     public UnityEvent Injured;
+    
+    public Animator _animator;
 
     public EnemyHP()
     {
@@ -29,6 +31,7 @@ public class EnemyHP : Entity, IHurtable
     {
         Injured = new UnityEvent();
         Assert.IsNotNull(_hitFeedback, "Asigna las particulas _hitFeedback para sangrar cuando golpeen");
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public override void Die()
@@ -44,11 +47,15 @@ public class EnemyHP : Entity, IHurtable
         Destroy(gameObject, .05f);
     }
 
-    public int Hurt(int damage, Vector3 from)
+    public float Hurt(float damage, Vector3 from)
     {
         hp -= Mathf.RoundToInt(damage * damageMultiplier);
 
-        if (damage > 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
+        if (damage > 0 && (from - transform.position).sqrMagnitude > 0.1f)
+        {
+            Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
+            _animator.SetTrigger("Hit");
+        }
 
         if (hp <= 0)
             Die();
