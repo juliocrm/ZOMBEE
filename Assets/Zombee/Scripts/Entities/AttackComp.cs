@@ -42,7 +42,6 @@ public class AttackComp : Entity
 
     public void Attack()
     {
-        //Debug.Log("Atacking");
         if (_currentWeapon.durability > 0)
         {
             Physics.OverlapSphere(_overlapSphereTransform.position,
@@ -53,11 +52,13 @@ public class AttackComp : Entity
 
             foreach (var contact in _collider)
             {
-                if (contact.GetComponent<IHurtable>() != null)
+                if (contact.gameObject != gameObject && contact.GetComponent<IHurtable>() != null)
                 {
                     contact.GetComponent<IHurtable>().Hurt(_currentWeapon.damage, transform.position);
 
                     _currentWeapon.durability--;
+
+                    Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
                     if (_currentWeapon.durability <= 0)
                     {
                         WeaponEmpty();
