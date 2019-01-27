@@ -5,6 +5,14 @@ using UnityEngine.Events;
 
 public class AttackComp : Entity
 {
+    public enum WeaponOwner
+    {
+        Player,
+        Enemy,
+        InfectedEnemy
+    }
+    public WeaponOwner owner;
+
     private WeaponDef _currentWeapon;
 
     [SerializeField]
@@ -56,23 +64,44 @@ public class AttackComp : Entity
                 _sphereRadious);
             Collider[] _collider = Physics.OverlapSphere(transform.position, 2f);
 
-            Debug.Log("Attack!");
+            //Debug.Log("Attack!");
 
             OnAttacked.Invoke();
 
             foreach (var contact in _collider)
             {
-                if (contact.gameObject != gameObject && contact.GetComponent<IHurtable>() != null)
+                if (contact.gameObject != gameObject && contact.GetComponent<IHurtable>() != null && contact.GetComponent<AttackComp>())
                 {
-                    contact.GetComponent<IHurtable>().Hurt(_currentWeapon.damage, transform.position);
-
-                    _currentWeapon.durability--;
-
-                    Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
-                    if (_currentWeapon.durability <= 0)
+                    AttackComp contactAttackComp = contact.GetComponent<AttackComp>();
+                    bool isEnemy = false;
+                    switch (owner)
                     {
-                        WeaponEmpty();
-                        break;
+                        case WeaponOwner.Player:
+                            isEnemy = contactAttackComp.owner == WeaponOwner.Enemy || contactAttackComp.owner == WeaponOwner.InfectedEnemy;
+                            break;
+                        case WeaponOwner.Enemy:
+                            isEnemy = contactAttackComp.owner == WeaponOwner.Player || contactAttackComp.owner == WeaponOwner.InfectedEnemy;
+                            break;
+                        case WeaponOwner.InfectedEnemy:
+                            isEnemy = contactAttackComp.owner == WeaponOwner.Enemy;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (isEnemy)
+                    {
+                        contact.GetComponent<IHurtable>().Hurt(_currentWeapon.damage, transform.position);
+
+                        if (owner == WeaponOwner.Player)
+                            _currentWeapon.durability--;
+
+                        Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
+                        if (_currentWeapon.durability <= 0)
+                        {
+                            WeaponEmpty();
+                            break;
+                        } 
                     }
                 }
             }
