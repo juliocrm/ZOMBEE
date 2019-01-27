@@ -2,11 +2,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public class EnemyAI : Entity
 {
-    enum EnemyType
+    public enum EnemyType
     {
         Patrol,
         Destroyer,
@@ -16,7 +17,7 @@ public class EnemyAI : Entity
     [SerializeField]
     float enemyScope = 15;
 
-    public Transform playerTransform;
+    private Transform playerTransform;
     private readonly int layerMask = 1 << 9;
 
     public Transform[] PatrolPoints { get; set; }
@@ -39,24 +40,32 @@ public class EnemyAI : Entity
         ChasingEnemy = new UnityEvent();
     }
 
-    public void Init(Transform t, Transform[] pp)
+    private void Start()
     {
-        float randomType = UnityEngine.Random.Range(0f, 1f);
-        if (randomType < 0.45f)
-        {
-            enemyType = EnemyType.Patrol;
-            PatrolPoints = pp;
-            ChangeTarget();
-        }
-        else if (randomType < 9)
-        {
-            enemyType = EnemyType.Destroyer;
-            TargetTransform = t;
-        }
-        else
-            enemyType = EnemyType.Assasin;
 
-        print(enemyType);
+    }
+
+    public void Init(EnemyType enemyType, Transform t, Transform[] pp)
+    {
+        PlayerController playerCtrl = transform.root.gameObject.GetComponentInChildren<PlayerController>(true);
+        //Transform playerCtrl = transform.root.Find("Player");
+        Assert.IsNotNull(playerCtrl, "AI no encontro jugador, esta todo bajo root?");
+        playerTransform = playerCtrl.gameObject.transform;
+        
+        switch (enemyType)
+        {
+            case EnemyType.Patrol:
+                PatrolPoints = pp;
+                ChangeTarget();
+                break;
+            case EnemyType.Destroyer:
+                TargetTransform = t;
+                break;
+            case EnemyType.Assasin:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null);
+        }
         StartCoroutine(Decide());
     }
 
@@ -87,6 +96,10 @@ public class EnemyAI : Entity
                             enemyAgent.destination = TargetTransform.position;
                             enemyAgent.autoBraking = true;
                             break;
+                        case EnemyType.Assasin:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
             }

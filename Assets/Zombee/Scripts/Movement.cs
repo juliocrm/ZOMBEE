@@ -8,6 +8,7 @@ public class Movement : Entity
     Transform playerTransform;
     Stamina playerStamina;
     public float movementSpeed = 3f;
+    public float tiredSpeed = 2f;
     public float rotationSpeed = 2f;
 
     private void Awake()
@@ -19,19 +20,7 @@ public class Movement : Entity
 
     public void Move(float forward)
     {
-        if (forward == 0)
-            return;
-        movementSpeed = (playerStamina.StaminaAmount > 5) ? 3 : 1;
-        Vector3 direction = Vector3.zero;
-        if (forward > 0)
-            direction = playerTransform.forward;
-        else
-            direction = -playerTransform.forward;
-
-        Vector3 newPos = playerRigidbody.position + direction * movementSpeed * Time.deltaTime;
-        //if(playerStamina.StaminaAmount > 5)
-        //  playerStamina.Hurt(runStaminaCost);
-        playerRigidbody.MovePosition(newPos);
+        Move(playerTransform.forward * forward);
     }
 
     public void Move(Vector3 direction)
@@ -39,8 +28,8 @@ public class Movement : Entity
         if (direction == Vector3.zero)
             return;
         //print(playerStamina.StaminaAmount);
-        movementSpeed = (playerStamina.StaminaAmount > 5) ? 3 : 2;
-        Vector3 newPos = playerRigidbody.position + direction * movementSpeed * Time.deltaTime;
+        float currentSpeed = (playerStamina.StaminaAmount > 5) ? movementSpeed : tiredSpeed;
+        Vector3 newPos = playerRigidbody.position + direction * currentSpeed * Time.deltaTime;
         //if(playerStamina.StaminaAmount > 5)
         //  playerStamina.Hurt(runStaminaCost);
         playerRigidbody.MovePosition(newPos);

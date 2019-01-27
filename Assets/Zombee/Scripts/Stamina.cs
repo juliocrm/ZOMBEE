@@ -1,20 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public class Stamina : Entity, IHurtable
 {
     const int maxStamina = 100;
 
-    int stamina =  maxStamina;
-    public int StaminaAmount { get; set; }
+    public int StaminaAmount { get; private set; } = maxStamina;
+
+    [SerializeField]
+    public GameObject _hitFeedback;
 
     public UnityEvent Injured;
 
     private void Awake()
     {
         Injured = new UnityEvent();
+
+        Assert.IsNotNull(_hitFeedback, "Asigna las particulas _hitFeedback para sangrar cuando golpeen");
     }
 
     public override void Die()
@@ -24,15 +29,17 @@ public class Stamina : Entity, IHurtable
             entity.Die();
     }
 
-     public int Hurt(int damage)
+     public int Hurt(int damage, Vector3 from)
     {
-        stamina += damage;
+        StaminaAmount += damage;
 
-        if (stamina <= 0)
+        if (StaminaAmount <= 0)
             Die();
+
+        if(damage < 0) Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
 
         Injured.Invoke();
 
-        return stamina;
+        return StaminaAmount;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : Entity
@@ -29,7 +30,7 @@ public class PlayerController : Entity
         playerMovement.Move(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
         playerMovement.LookToStick(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         
-        if (Input.GetAxis("Right Trigger") > .5f)
+        if (Input.GetAxis("Right Trigger") > .5f || Input.GetMouseButtonDown(0))
         {
             if (enableRightTrigger)
             {

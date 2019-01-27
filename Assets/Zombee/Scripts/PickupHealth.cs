@@ -20,7 +20,7 @@ public class PickupHealth : MonoBehaviour
     private IEnumerator TimeToReceibeStamina() {
         yield return new WaitForSeconds(Time);
         if (Incontact) {
-            staminaComponent.Hurt(StaminaIncrease);
+            staminaComponent.Hurt(StaminaIncrease, transform.position);
             gameObject.SetActive(false);
         }
     }

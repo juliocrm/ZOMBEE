@@ -71,7 +71,7 @@ public class TrapComponent : MonoBehaviour
     }
     private void ExecuteDamageTrap() {
         foreach (GameObject enemi in EnemiesAfected) {
-            enemi.GetComponent<EnemyHP>().Hurt(trapDefinition.Damage);
+            enemi.GetComponent<EnemyHP>().Hurt(trapDefinition.Damage, transform.position);
         }
     }
     private void ExecuteSlowTrap() {

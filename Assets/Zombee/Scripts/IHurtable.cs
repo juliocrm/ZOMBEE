@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHurtable
 {
-    int Hurt(int damage);
+    int Hurt(int damage, Vector3 from);
 }

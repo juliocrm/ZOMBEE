@@ -155,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 5830787826595633067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.54, y: 0.73, z: 0}
-  m_LocalScale: {x: 0.65179, y: 0.65179, z: 0.65179}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3622104781273762631}
   - {fileID: 6501095872653034214}
@@ -191,6 +191,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _overlapSphereTransform: {fileID: 3622104781273762631}
   _sphereRadious: 1
+  OnAttacked:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &5830787826595633068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
+  tiredSpeed: 2
   rotationSpeed: 2
 --- !u!114 &5830787826595633069
 MonoBehaviour:
@@ -219,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traps:
   - {fileID: 3345421442918083607, guid: d4dbba472f7cb294c9d1c6ea3852cdc6, type: 3}
-  - {fileID: 3345421442918083607, guid: d4dbba472f7cb294c9d1c6ea3852cdc6, type: 3}
+  - {fileID: 3345421442918083607, guid: 677bbde76f1c8e44ba6a46a307a50e20, type: 3}
 --- !u!114 &5830787826595633075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +238,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafeeeddb9a928041a762bcee5560b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitFeedback: {fileID: 6255141843283170492, guid: 6c9090d66f55acb45b26d697c60f30b1,
+    type: 3}
+  Injured:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!23 &5830787826595633071
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -305,5 +318,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 96
   m_CollisionDetection: 0

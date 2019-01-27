@@ -28,6 +28,11 @@ public class WaveManager : MonoBehaviour
 
     private SpawnPoint[] _spawnPoints;
 
+    WaveManager()
+    {
+        OnEntitySpawn = new EntitySpawnEvent();
+    }
+
     void Awake()
     {
         _spawnPoints = GetComponentsInChildren<SpawnPoint>();
@@ -35,7 +40,6 @@ public class WaveManager : MonoBehaviour
 
         StartCoroutine(_Sequence());
 
-        OnEntitySpawn = new EntitySpawnEvent();
     }
 
     private IEnumerator _Sequence()
@@ -43,11 +47,15 @@ public class WaveManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(_secondsBetweenWaves);
-
+            
             for (int i = 0; i < _waveEnemyCount; i++)
             {
                 int spawnPointIndx = Random.Range(0, _spawnPoints.Length);
                 SpawnPoint spawnPoint = _spawnPoints[spawnPointIndx];
+
+
+                float randomType = UnityEngine.Random.Range(0f, 1f);
+
                 SpawnEnemyOnPositon(_EnemiesToSpawn[Random.Range(0, _EnemiesToSpawn.Length)].Prefab, spawnPoint.transform, Random.Range(0, 2));
             }
         }
@@ -57,12 +65,12 @@ public class WaveManager : MonoBehaviour
     {
         GameObject enemyGameObject = Instantiate(prefab, transform);
 
+        enemyGameObject.transform.parent = transform;
+
         //enemyGameObject.transform.position = transform.position;
         //enemyGameObject.transform.rotation = transform.rotation;
 
-        // TODO: Activar al enemigo
-
-        ////////////////
+        enemyGameObject.GetComponent<EnemyAI>().Init(EnemyAI.EnemyType.Assasin, null, null);
 
         OnEntitySpawn.Invoke(enemyGameObject);
     }
