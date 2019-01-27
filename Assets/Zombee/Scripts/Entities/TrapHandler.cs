@@ -6,20 +6,18 @@ public class TrapHandler : Entity
 {
 
     public TrapComponent[] traps;
-
+    bool Died = false;
+    public Animator _anim;
     public override void Die()
     {
         enabled = false;
     }
 
-    public void CraftTrap(int i)
-    {
-
-    }
     public void PutTrap(int Trap, Vector3 PlayerPosition)
     {
-        if (enabled)
+        if (!Died)
         {
+            _anim.SetTrigger("Crouch");
             traps[Trap].InstantiateTrap(PlayerPosition);
         }
     }
