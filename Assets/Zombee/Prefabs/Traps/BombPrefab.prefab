@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 568739331893094225}
   - component: {fileID: 568739331893094224}
+  - component: {fileID: 1150001762}
   m_Layer: 0
-  m_Name: BombPrefab 1
+  m_Name: BombPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,6 +52,31 @@ MonoBehaviour:
     TimeActive: 3
     Damage: 1
   _anim: {fileID: 568739332727346563}
+--- !u!135 &1150001762
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568739331893094239}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.8588996
+  m_Center: {x: 0.028101444, y: 0, z: -0.2284236}
+--- !u!114 &101987541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697143408818970041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fdab5e025e9b694d994c2e1109c0071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &568739332736770275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,10 +132,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bomb
       objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: 929f6173f56ba0045b71bacf985f3400, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 929f6173f56ba0045b71bacf985f3400, type: 3}
       propertyPath: m_Controller
       value: 
@@ -139,11 +161,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ExploitableBarrel Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 5257038691134322141, guid: c679f5233eca87241859fb33bfbc4213,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5257038691134351421, guid: c679f5233eca87241859fb33bfbc4213,
         type: 3}
@@ -202,6 +219,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c679f5233eca87241859fb33bfbc4213, type: 3}
+--- !u!1 &5697143408818970041 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5257038691134322141, guid: c679f5233eca87241859fb33bfbc4213,
+    type: 3}
+  m_PrefabInstance: {fileID: 568739332955269220}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5697143408818864217 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5257038691134351421, guid: c679f5233eca87241859fb33bfbc4213,

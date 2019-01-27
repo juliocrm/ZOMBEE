@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trapDefinition:
-    TrapType: 1
+    TrapType: 3
     TimeToActive: 1
     TimeActive: 8
     Damage: 25
@@ -162,22 +162,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 093e51c23bc1644408a73d058947080f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 093e51c23bc1644408a73d058947080f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 093e51c23bc1644408a73d058947080f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 093e51c23bc1644408a73d058947080f, type: 3}
       propertyPath: m_Name
       value: SmokeModel
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 093e51c23bc1644408a73d058947080f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 462d6c9ecddfc284d83b1d1c34da0ff4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 093e51c23bc1644408a73d058947080f, type: 3}
 --- !u!4 &7790134427107365663 stripped
