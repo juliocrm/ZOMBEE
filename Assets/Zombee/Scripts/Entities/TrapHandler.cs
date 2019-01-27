@@ -6,19 +6,23 @@ public class TrapHandler : Entity
 {
 
     public TrapComponent[] traps;
+    bool Died = false;
+    public Animator _anim;
+    public int StaminaCost;
 
     public override void Die()
     {
-        throw new System.NotImplementedException();
+        enabled = false;
     }
 
-    public void CraftTrap(int i)
-    {
-
-    }
     public void PutTrap(int Trap, Vector3 PlayerPosition)
     {
-        Debug.Log("puttrap" + Trap);
-        traps[Trap].InstantiateTrap(PlayerPosition);
+        
+        if (!Died && GetComponent<Stamina>().StaminaAmount>=StaminaCost)
+        {
+            GetComponent<Stamina>().Hurt(StaminaCost, transform.position);
+            _anim.SetTrigger("Crouch");
+            traps[Trap].InstantiateTrap(PlayerPosition);
+        }
     }
 }

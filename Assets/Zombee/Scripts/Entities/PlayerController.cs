@@ -63,6 +63,6 @@ public class PlayerController : Entity
 
     public override void Die()
     {
-        throw new System.NotImplementedException();
+        enabled = false;
     }
 }

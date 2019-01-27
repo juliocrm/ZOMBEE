@@ -5,6 +5,14 @@ using UnityEngine.Events;
 
 public class AttackComp : Entity
 {
+    public enum WeaponOwner
+    {
+        Player,
+        Enemy,
+        InfectedEnemy
+    }
+    public WeaponOwner owner;
+
     private WeaponDef _currentWeapon;
 
     [SerializeField]
@@ -13,6 +21,10 @@ public class AttackComp : Entity
     public float _sphereRadious;
     [SerializeField]
     public float _attackDelay = .75f;
+    [SerializeField]
+    public Animator _animator;
+
+    public GameObject WeaponObject;
 
     public bool CanAttack { get; private set; }
 
@@ -23,7 +35,7 @@ public class AttackComp : Entity
     private void Start()
     {
         CanAttack = true;
-        SetWeapon(0);
+        SetWeapon(1);
     }
 
     public bool HasWeapon
@@ -32,6 +44,11 @@ public class AttackComp : Entity
         {
             return _currentWeapon.durability > 0;
         }
+    }
+
+    public WeaponDef GetWeaponDef()
+    {
+        return _currentWeapon; 
     }
 
 
@@ -51,28 +68,47 @@ public class AttackComp : Entity
         {
             CanAttack = false;
             StartCoroutine(_WaitToBeAbleToAttack());
+            _animator.SetTrigger("Attack");
+            Collider[] _collider = Physics.OverlapSphere(_overlapSphereTransform.position,_sphereRadious);
 
-            Physics.OverlapSphere(_overlapSphereTransform.position,
-                _sphereRadious);
-            Collider[] _collider = Physics.OverlapSphere(transform.position, 2f);
-
-            Debug.Log("Attack!");
+            //Debug.Log("Attack!");
 
             OnAttacked.Invoke();
 
             foreach (var contact in _collider)
             {
-                if (contact.gameObject != gameObject && contact.GetComponent<IHurtable>() != null)
+                if (contact.gameObject != gameObject && contact.GetComponent<IHurtable>() != null && contact.GetComponent<AttackComp>())
                 {
-                    contact.GetComponent<IHurtable>().Hurt(_currentWeapon.damage, transform.position);
-
-                    _currentWeapon.durability--;
-
-                    Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
-                    if (_currentWeapon.durability <= 0)
+                    AttackComp contactAttackComp = contact.GetComponent<AttackComp>();
+                    bool isEnemy = false;
+                    switch (owner)
                     {
-                        WeaponEmpty();
-                        break;
+                        case WeaponOwner.Player:
+                            isEnemy = contactAttackComp.owner == WeaponOwner.Enemy || contactAttackComp.owner == WeaponOwner.InfectedEnemy;
+                            break;
+                        case WeaponOwner.Enemy:
+                            isEnemy = contactAttackComp.owner == WeaponOwner.Player || contactAttackComp.owner == WeaponOwner.InfectedEnemy;
+                            break;
+                        case WeaponOwner.InfectedEnemy:
+                            isEnemy = contactAttackComp.owner == WeaponOwner.Enemy;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (isEnemy)
+                    {
+                        contact.GetComponent<IHurtable>().Hurt(_currentWeapon.damage, transform.position);
+
+                        if (owner == WeaponOwner.Player)
+                            _currentWeapon.durability--;
+
+                        //Debug.LogFormat("Durability Left {0}", _currentWeapon.durability);
+                        if (_currentWeapon.durability <= 0)
+                        {
+                            WeaponEmpty();
+                            break;
+                        } 
                     }
                 }
             }
@@ -94,9 +130,19 @@ public class AttackComp : Entity
     {
         //Get weapon from GameManager
         _currentWeapon = GameManager.Get.weaponDefs[weaponID];
+        CanAttack = true;
+
+        if (owner == WeaponOwner.Player)
+        {
+            Debug.Log(_currentWeapon.durability);
+            WeaponObject.SetActive(_currentWeapon.durability > 0);
+        }
+        
     }
 
     private void WeaponEmpty() {
-        // TODO Destroy weapon
+        Debug.Log("LLAMADO"+name);
+        if (owner == WeaponOwner.Player)
+            WeaponObject.SetActive(false);
     }
 }

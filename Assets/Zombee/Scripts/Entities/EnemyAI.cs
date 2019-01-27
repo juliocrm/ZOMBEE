@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using System.Linq;
+using System.Linq.Expressions;
 
 public class EnemyAI : Entity
 {
@@ -16,9 +18,10 @@ public class EnemyAI : Entity
 
     [SerializeField]
     float enemyScope = 15;
+    [SerializeField]
+    public float checkSphereRadious = 5;
 
     private Transform playerTransform;
-    private readonly int layerMask = 1 << 9;
 
     public Transform[] PatrolPoints { get; set; }
     public Transform TargetTransform { get; set; }
@@ -32,6 +35,7 @@ public class EnemyAI : Entity
 
     bool isAlive = true;
     bool playerOnSight;
+    bool isTurned;
 
 
     private void Awake()
@@ -80,6 +84,7 @@ public class EnemyAI : Entity
             else
             {
                 playerOnSight = CheckForPlayer();
+                print(playerOnSight);
                 if (playerOnSight)
                     FollowPlayer();
                 else
@@ -127,15 +132,55 @@ public class EnemyAI : Entity
     private bool CheckForPlayer()
     {
         Vector3 toPlayer = (playerTransform.position - enemyTransform.position);
+        toPlayer.y = 0f;
         if (toPlayer.magnitude < enemyScope)
         {
             Vector3 toPlayerNormalized = toPlayer.normalized;
             if (Vector3.Dot(enemyTransform.forward, toPlayerNormalized) >= 0.4f)
-                if (Physics.Raycast(enemyTransform.position, toPlayerNormalized, out RaycastHit hit, enemyScope, layerMask))
-                    if (hit.collider.GetComponent<PlayerController>())
+            {
+                Debug.DrawLine(enemyTransform.position + new Vector3(0, 1f, 0f), enemyTransform.position + toPlayerNormalized * enemyScope + new Vector3(0, 1f, 0f), Color.red, 1f, false);
+                RaycastHit[] hits = Physics
+                    .RaycastAll(enemyTransform.position + new Vector3(0, 1f, 0f), toPlayerNormalized, enemyScope).OrderBy(h => h.distance).ToArray();
+                foreach (RaycastHit raycastHit in hits)
+                {
+                    if (raycastHit.collider.gameObject == gameObject) continue;
+                    if(raycastHit.collider.GetComponent<PlayerController>())
+                    {
                         return true;
+                    }
+                    else
+                    {
+                        Debug.LogFormat("Blocked by {0}", raycastHit.collider.gameObject.name);
+                        return false;
+                    }
+                }
+            }
         }
         return false;
+    }
+
+    private Transform CheckForEnemies()
+    {
+        Collider[] _collider = Physics.OverlapSphere(enemyTransform.position, checkSphereRadious);
+        float nearestEnemyDistance = Mathf.Infinity;
+        Collider nearestEnemy = null;
+        foreach (Collider contact in _collider)
+        {
+            if (contact.gameObject != gameObject && contact.GetComponent<IHurtable>() != null && !contact.GetComponent<PlayerController>())
+            {
+                float distanceToEnemy = (contact.transform.position - enemyTransform.position).magnitude;
+                if (distanceToEnemy < nearestEnemyDistance)
+                {
+                    nearestEnemy = contact;
+                    nearestEnemyDistance = distanceToEnemy;
+                }
+            }
+        }
+        if (nearestEnemy)
+        {
+            return nearestEnemy.transform;
+        }
+        return null;
     }
 
     private int destPoint = 0;
@@ -158,8 +203,40 @@ public class EnemyAI : Entity
         destPoint = newDest;
     }
 
+    public void TurnAgainst()
+    {
+        isTurned = true;
+        StartCoroutine(TurnAgainstProcess());
+        StartCoroutine(FinishTurnProcess());
+    }    
+
+    IEnumerator TurnAgainstProcess()
+    {
+        Transform tempPlayer = playerTransform;
+        EnemyType previousEnemyType = enemyType;
+        enemyType = EnemyType.Assasin;
+        while (isTurned)
+        {
+            Transform newEnemy = CheckForEnemies();
+            playerTransform = newEnemy;
+            yield return waitUntilNextDecition; 
+        }
+        playerTransform = tempPlayer;
+        enemyType = previousEnemyType;
+    }
+
+    readonly WaitForSeconds waitForTurnBack = new WaitForSeconds(3);
+
+    IEnumerator FinishTurnProcess()
+    {
+        yield return waitForTurnBack;
+        isTurned = false;
+    }
+
     public override void Die()
     {
         isAlive = false;
+    }
+    public void SlowDown() {
     }
 }

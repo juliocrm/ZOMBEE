@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PickupHealth : MonoBehaviour
 {
-    public int StaminaIncrease;
-    public int Time;
+    public float StaminaIncrease = 35f;
+    public float StaminaTransferRate = 20f;
     Stamina staminaComponent;
     bool Incontact = false;
+    [SerializeField]
+    private GameObject _HealFeedback;
+    [SerializeField]
+    private GameObject _HoneyObject;
+
+    private void Awake()
+    {
+        Assert.IsNotNull(_HealFeedback, "Falta asignar el _HealFeedback para mostrar curacion");
+        _HealFeedback.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -17,11 +28,32 @@ public class PickupHealth : MonoBehaviour
             StartCoroutine(TimeToReceibeStamina());
         }   
     }
-    private IEnumerator TimeToReceibeStamina() {
-        yield return new WaitForSeconds(Time);
-        if (Incontact) {
-            staminaComponent.Hurt(StaminaIncrease, transform.position);
-            gameObject.SetActive(false);
+
+    private IEnumerator TimeToReceibeStamina()
+    {
+        float accum = 0f;
+        while (StaminaIncrease > 0 && staminaComponent && staminaComponent.StaminaAmount < Stamina.maxStamina)
+        {
+            _HealFeedback.SetActive(true);
+            float delta = StaminaTransferRate * Time.deltaTime;
+            StaminaIncrease -= StaminaTransferRate * Time.deltaTime;
+            accum += delta;
+            if (accum > 1f)
+            {
+                int amountToTransfer = (int) accum;
+                staminaComponent.Hurt(-amountToTransfer, transform.position);
+                accum -= amountToTransfer;
+            }
+            yield return 0;
+        }
+
+        _HealFeedback.SetActive(false);
+        StopCoroutine(TimeToReceibeStamina());
+
+        if (StaminaIncrease <= 0)
+        {
+            _HoneyObject.SetActive(false);
+            enabled = false;
         }
     }
     
@@ -33,6 +65,7 @@ public class PickupHealth : MonoBehaviour
             StopCoroutine(TimeToReceibeStamina());
             Incontact = false;
             staminaComponent = null;
+            _HealFeedback.SetActive(false);
         }
     }
 }

@@ -44,6 +44,14 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public WeaponDef[] weaponDefs;
+    public WeaponDef[] weaponDefs =
+    {
+        new WeaponDef //Light
+            { damage = 25, durability = 4},
+        new WeaponDef //Medium
+            { damage = 25, durability = 7},
+        new WeaponDef //Heavy
+            { damage = 330, durability = 1},
+    };
 }
 
