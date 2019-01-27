@@ -37,6 +37,10 @@ public class MusicManager : MonoBehaviour
         _audioChase.Stop();
         _audioCombat.Stop();
 
+        _audioBase.loop = true;
+        _audioChase.loop = true;
+        _audioCombat.loop = true;
+
         _audioBase.clip = _baseClip;
         _audioChase.clip = _chaseClip;
         _audioCombat.clip = _combatClip;
@@ -68,11 +72,13 @@ public class MusicManager : MonoBehaviour
 
     public void PlayChase()
     {
-        _raiseBase = false;
-        _raiseChase = true;
-        _raiseCombat = false;
+        if(!_raiseCombat) { 
+            _raiseBase = false;
+            _raiseChase = true;
+            _raiseCombat = false;
 
-        _timeToGoBackToBase = Time.timeSinceLevelLoad + _waitToGoBackToBaseMusic;
+            _timeToGoBackToBase = Time.timeSinceLevelLoad + _waitToGoBackToBaseMusic;
+        }
     }
 
     public void PlayCombat()

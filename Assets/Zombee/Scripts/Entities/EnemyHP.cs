@@ -55,13 +55,13 @@ public class EnemyHP : Entity, IHurtable
         {
             Instantiate(_hitFeedback, transform.position, Quaternion.LookRotation(from, transform.position));
             _animator.SetTrigger("Hit");
+
+            Injured.Invoke();
         }
 
         if (hp <= 0)
             Die();
 
-        
-        Injured.Invoke();
 
         return hp;
     }
